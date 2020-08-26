@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-import axios from "axios";
+
+import instance from "./axios-instance";
 
 class App extends Component {
   state = {
@@ -38,35 +39,33 @@ class App extends Component {
 
   fileUploadHandler = (event) => {
     event.preventDefault();
-    console.log("title", this.state.title);
-    console.log("description", this.state.description);
-    console.log("publication_year", this.state.publication_year);
-    console.log("author", this.state.author);
-    console.log("language", this.state.language);
-    console.log("number_pages", this.state.number_pages);
-    console.log("selectedFile", this.state.selectedFile);
+
     // const formData = new FormData();
     // formData.append(
+    //   "title",
+    //   this.state.title,
+
     //   "pdf",
     //   this.state.selectedFile,
     //   this.state.selectedFile.name
     // );
 
-    // console.log("estado", this.state.selectedFile);
+    const formData = {
+      title: this.state.title,
+      description: this.state.description,
+      publication_year: this.state.publication_year,
+      author: this.state.author,
+      language: this.state.language,
+      number_pages: parseInt(this.state.number_pages),
+      selectedFile: this.state.selectedFile,
+    };
 
-    // axios
-    //   .post("http://127.0.0.1:8000/api/paper-create/", formData, {
-    //     onUploadProgress: (progressEvent) => {
-    //       console.log(
-    //         "Upload progress" +
-    //           Math.round((progressEvent.loaded / progressEvent.total) * 100) +
-    //           "%"
-    //       );
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //   });
+    console.log("formdata", formData);
+
+    instance
+      .post("paper-create/", formData)
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err));
   };
 
   render() {
