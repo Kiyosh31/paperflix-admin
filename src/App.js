@@ -4,8 +4,9 @@ import "./App.css";
 import instance from "axios-instance";
 import Login from "containers/Login/Login";
 import Home from "containers/Home/Home";
-import { Route, Switch } from "react-router-dom";
 import NotFound from "containers/NotFound/NotFound";
+import ProtectedRoute from "components/ProtectedRoute/ProtectedRoute";
+import { Route, Switch } from "react-router-dom";
 
 class App extends Component {
   state = {
@@ -76,7 +77,7 @@ class App extends Component {
       <div className="app__color">
         <Switch>
           <Route path="/" exact component={Login} />
-          <Route path="/home" component={Home} />
+          <ProtectedRoute path="/home" component={Home} />
           <Route path="/*" component={NotFound} />
         </Switch>
         {/* <form onSubmit={this.fileUploadHandler}>

@@ -6,8 +6,8 @@ import NavigationItem from "components/NavigationItem/NavigationItem";
 const NavigationItems = () => {
   return (
     <ul className="navigationItems">
-      <NavigationItem>Agregar Documentos</NavigationItem>
-      <NavigationItem>Eliminar Documentos</NavigationItem>
+      <NavigationItem link="/home">Agregar Documentos</NavigationItem>
+      <NavigationItem link="/home">Eliminar Documentos</NavigationItem>
     </ul>
   );
 };

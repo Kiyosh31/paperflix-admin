@@ -3,8 +3,6 @@ import Cookies from "js-cookie";
 import { sha256 } from "js-sha256";
 
 class Auth {
-  constructor() {}
-
   login(email, password) {
     return new Promise((resolve, reject) => {
       const payload = {
@@ -15,12 +13,11 @@ class Auth {
       instance
         .post("admin-login/", payload)
         .then((response) => {
-          console.log(response);
           if (response.status === 200) {
             let hash = sha256.create();
             hash.update(email + password);
             hash.hex();
-            resolve(Cookies.set("authenticated", hash, { expires: 5 }));
+            resolve(Cookies.set("admin", hash, { expires: 1 }));
           }
         })
         .catch((err) => {
