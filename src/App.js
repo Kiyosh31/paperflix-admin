@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
 
-import instance from "./axios-instance";
+import instance from "axios-instance";
+import Login from "containers/Login/Login";
+import Home from "containers/Home/Home";
+import { Route, Switch } from "react-router-dom";
+import NotFound from "containers/NotFound/NotFound";
 
 class App extends Component {
   state = {
@@ -24,7 +28,6 @@ class App extends Component {
     const file = event.target.files[0];
     const base64File = await this.convertBase64(file);
     this.setState({ selectedFile: base64File });
-    // console.log("estado", this.state.selectedFile);
   };
 
   convertBase64 = (file) => {
@@ -70,8 +73,13 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <form onSubmit={this.fileUploadHandler}>
+      <div className="app__color">
+        <Switch>
+          <Route path="/" exact component={Login} />
+          <Route path="/home" component={Home} />
+          <Route path="/*" component={NotFound} />
+        </Switch>
+        {/* <form onSubmit={this.fileUploadHandler}>
           <input
             type="text"
             placeholder="Titulo"
@@ -110,7 +118,7 @@ class App extends Component {
           />
           <input type="file" onChange={this.fileSelectedHandler} />
           <button type="submit">Enviar</button>
-        </form>
+        </form> */}
       </div>
     );
   }
