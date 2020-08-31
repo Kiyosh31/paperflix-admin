@@ -74,7 +74,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app__color">
+      <div className="App">
         <Switch>
           <Route path="/" exact component={Login} />
           <ProtectedRoute path="/home" component={Home} />

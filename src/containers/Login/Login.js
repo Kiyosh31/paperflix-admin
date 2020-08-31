@@ -47,6 +47,12 @@ class Login extends Component {
     isAuthenticated: false,
   };
 
+  componentDidMount() {
+    if (auth.isAuthenticated()) {
+      this.setState({ isAuthenticated: true });
+    }
+  }
+
   checkValidity(value, rules) {
     let isValid = true;
     if (!rules) {

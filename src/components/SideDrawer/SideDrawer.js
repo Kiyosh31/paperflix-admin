@@ -1,17 +1,23 @@
 import React from "react";
 import "./SideDrawer.css";
 
-import Logo from "components/Logo/Logo";
-import NavigationItems from "components/NavigationItems/NavigationItems";
+const SideDrawer = (props) => {
+  let drawerClasses = ["side-drawer"];
+  if (props.show) {
+    drawerClasses.push("open");
+  }
 
-const SideDrawer = () => {
   return (
-    <div className="sideDrawer">
-      <Logo />
-      <nav>
-        <NavigationItems />
-      </nav>
-    </div>
+    <nav className={drawerClasses.join(" ")}>
+      <ul>
+        <li>
+          <a href="/">Agregar Papers</a>
+        </li>
+        <li>
+          <a href="/">Eliminar Papers</a>
+        </li>
+      </ul>
+    </nav>
   );
 };
 

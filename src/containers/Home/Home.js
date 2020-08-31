@@ -2,9 +2,11 @@ import React, { Component } from "react";
 
 import Input from "components/Input/Input";
 import Button from "components/Button/Button";
-
-import instance from "axios-instance";
 import SideDrawer from "components/SideDrawer/SideDrawer";
+import Toolbar from "components/Toolbar/Toolbar";
+import Backdrop from "components/Backdrop/Backdrop";
+import instance from "axios-instance";
+import Footer from "components/Footer/Footer";
 
 class Home extends Component {
   state = {
@@ -80,6 +82,7 @@ class Home extends Component {
       },
     },
     formIsValid: false,
+    sideDrawerOpen: false,
   };
 
   checkValidity(value, rules) {
@@ -176,7 +179,20 @@ class Home extends Component {
       .catch((err) => console.log(err));
   };
 
+  drawerToggleClickHandler = () => {
+    this.setState({ sideDrawerOpen: !this.state.sideDrawerOpen });
+  };
+
+  backdropClickHandler = () => {
+    this.setState({ sideDrawerOpen: false });
+  };
+
   render() {
+    let backdrop;
+    if (this.state.sideDrawerOpen) {
+      backdrop = <Backdrop click={this.backdropClickHandler} />;
+    }
+
     const formElementsArray = [];
     for (let key in this.state.controls) {
       formElementsArray.push({
@@ -200,13 +216,16 @@ class Home extends Component {
 
     return (
       <div>
-        <SideDrawer />
-        <form onSubmit={this.submitHandler}>
+        <Toolbar drawerClickHandler={this.drawerToggleClickHandler} />
+        <SideDrawer show={this.state.sideDrawerOpen} />
+        {backdrop}
+        <form style={{ marginTop: "56px" }} onSubmit={this.submitHandler}>
           {form}
           <Button btnType="submit" disabled={!this.state.formIsValid}>
             Enviar
           </Button>
         </form>
+        <Footer />
       </div>
     );
   }
