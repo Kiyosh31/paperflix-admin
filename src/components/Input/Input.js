@@ -1,6 +1,9 @@
 import React from "react";
 import "./Input.css";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
+
 const Input = (props) => {
   let inputElement = null;
 
@@ -23,7 +26,7 @@ const Input = (props) => {
     case "textarea":
       inputElement = (
         <textarea
-          className={`input ${invalid}`}
+          className={`input__textarea ${invalid}`}
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
@@ -32,12 +35,20 @@ const Input = (props) => {
       break;
     case "file":
       inputElement = (
-        <input
-          className={`input__file ${invalid}`}
-          {...props.elementConfig}
-          value={props.value}
-          onChange={props.changed}
-        />
+        <div>
+          <input
+            name="file-input"
+            id="file-input"
+            className={`input__file ${invalid}`}
+            {...props.elementConfig}
+            value={props.value}
+            onChange={props.changed}
+          />
+          <label className="inputfile__label" htmlFor="file-input">
+            <FontAwesomeIcon icon={faFilePdf} className="brand__icon" />{" "}
+            Selecciona un archivo
+          </label>
+        </div>
       );
       break;
     default:

@@ -7,6 +7,8 @@ import Toolbar from "components/Toolbar/Toolbar";
 import Backdrop from "components/Backdrop/Backdrop";
 import instance from "axios-instance";
 import Footer from "components/Footer/Footer";
+import Title from "components/Title/Title";
+import FormBox from "components/FormBox/FormBox";
 
 class Home extends Component {
   state = {
@@ -28,7 +30,7 @@ class Home extends Component {
       description: {
         elementType: "textarea",
         elementConfig: {
-          type: "textarea",
+          type: "text",
           placeholder: "Descripcion",
         },
         value: "",
@@ -219,12 +221,19 @@ class Home extends Component {
         <Toolbar drawerClickHandler={this.drawerToggleClickHandler} />
         <SideDrawer show={this.state.sideDrawerOpen} />
         {backdrop}
-        <form style={{ marginTop: "80px" }} onSubmit={this.submitHandler}>
-          {form}
-          <Button btnType="submit" disabled={!this.state.formIsValid}>
-            Enviar
-          </Button>
-        </form>
+        <FormBox>
+          <Title home>Agregar Paper</Title>
+          <form
+            style={{ marginTop: "80px", margin: "20px" }}
+            onSubmit={this.submitHandler}
+          >
+            {form}
+            <Button btnType="submit" disabled={!this.state.formIsValid}>
+              Enviar
+            </Button>
+          </form>
+        </FormBox>
+
         <Footer />
       </div>
     );

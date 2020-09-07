@@ -13,15 +13,42 @@
   box-sizing: border-box;
 }
 
-.input__file {
-  height: 50px;
+.input__textarea {
+  height: 90px;
   width: 100%;
-  background: #e50914;
-  border: 1px solid #e50914;
   border-radius: 3px;
+  background: #333;
   color: #fff;
-  font-weight: 500;
-  font-size: 16px;
+  border: 1px solid #333;
+  padding-left: 15px;
+  box-sizing: border-box;
+}
+
+.input__textarea::-webkit-input-placeholder {
+  color: #fff;
+}
+
+.input__file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #ff0033;
+  display: inline-block;
+  transition: all 0.5s;
+  cursor: pointer;
+  padding: 15px 40px !important;
+  text-transform: uppercase;
+  width: fit-content;
+  text-align: center;
 }
 
 .input::placeholder,
