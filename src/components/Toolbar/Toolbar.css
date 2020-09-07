@@ -1,44 +1,27 @@
 .toolbar {
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
+  padding: 20px;
+  height: 30px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
   background-color: #111;
-  height: 80px;
+
+  transition-timing-function: ease-in;
+  transition: all 0.5s;
 }
 
-.toolbar__logo {
-  margin-left: 1rem;
-}
-
-.logo {
-  width: 80px;
-  object-fit: contain;
-}
-
-.avatar {
-  width: 30px;
-  object-fit: contain;
-}
-
-.spacer {
-  flex: 1;
-}
-
-.toolbar__navigation {
+.toolbar nav {
+  z-index: 99;
+  width: 100%;
+  padding: 0 25px;
   display: flex;
-  height: 100%;
   align-items: center;
-  padding: 0 1rem;
+  justify-content: space-between;
 }
 
-.toolbar_navigation-items ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-
-.toolbar_navigation-items li {
-  padding: 0 0.5rem;
+.toolbar__black {
+  background-color: #111;
 }

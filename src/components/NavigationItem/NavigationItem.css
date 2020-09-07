@@ -1,14 +1,27 @@
-.item {
-  margin: 0.5rem 0;
+.nav__item {
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+  align-items: center;
 }
 
-.link {
+.nav__item-link {
   color: white;
   text-decoration: none;
-  font-size: 1.2rem;
+  height: 100%;
+  padding: 16px 10px;
+  border-bottom: 4px solid transparent;
+  box-sizing: border-box;
+  display: block;
 }
 
-.link:hover,
-.active {
-  color: #e50914;
+.nav__item-link:hover {
+  color: lightgray;
+}
+
+.nav__item-link:active,
+.nav__item-link.active {
+  color: white;
+  font-weight: 600;
 }
