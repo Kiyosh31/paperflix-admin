@@ -12,6 +12,110 @@ import FormBox from "components/FormBox/FormBox";
 
 import isBase64 from "is-base64";
 
+const initialState = {
+  controls: {
+    title: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Titulo",
+      },
+      value: "",
+      validation: {
+        required: true,
+        minLength: 5,
+      },
+      valid: false,
+      touched: false,
+    },
+    description: {
+      elementType: "textarea",
+      elementConfig: {
+        type: "text",
+        placeholder: "Descripcion",
+      },
+      value: "",
+      validation: {
+        required: true,
+        minLength: 5,
+      },
+      valid: false,
+      touched: false,
+    },
+    publication_year: {
+      elementType: "input",
+      elementConfig: {
+        type: "number",
+        placeholder: "Año de publicacion",
+      },
+      value: "",
+      validation: {
+        required: true,
+        minLength: 3,
+      },
+      valid: false,
+      touched: false,
+    },
+    author: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Autor",
+      },
+      value: "",
+      validation: {
+        required: true,
+        minLength: 5,
+      },
+      valid: false,
+      touched: false,
+    },
+    language: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Idioma",
+      },
+      value: "",
+      validation: {
+        required: true,
+        minLength: 5,
+      },
+      valid: false,
+      touched: false,
+    },
+    number_pages: {
+      elementType: "input",
+      elementConfig: {
+        type: "number",
+        placeholder: "Numero de paginas",
+      },
+      value: "",
+      validation: {
+        required: true,
+        minLength: 3,
+      },
+      valid: false,
+      touched: false,
+    },
+    file: {
+      elementType: "file",
+      elementConfig: {
+        type: "file",
+        placeholder: "",
+      },
+      value: "",
+      validation: {
+        isFile: true,
+      },
+      valid: false,
+      touched: false,
+    },
+  },
+  formIsValid: false,
+  sideDrawerOpen: false,
+};
+
 class Home extends Component {
   state = {
     controls: {
@@ -210,6 +314,10 @@ class Home extends Component {
     });
   };
 
+  clearForm = () => {
+    this.setState(initialState);
+  };
+
   submitHandler = (event) => {
     event.preventDefault();
 
@@ -237,7 +345,10 @@ class Home extends Component {
 
     instance
       .post("paper-create/", formData)
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response);
+        this.clearForm();
+      })
       .catch((err) => console.log(err));
   };
 
