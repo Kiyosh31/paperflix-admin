@@ -10,6 +10,8 @@ import Footer from "components/Footer/Footer";
 import Title from "components/Title/Title";
 import FormBox from "components/FormBox/FormBox";
 
+import isBase64 from "is-base64";
+
 class Home extends Component {
   state = {
     controls: {
@@ -37,6 +39,20 @@ class Home extends Component {
         validation: {
           required: true,
           minLength: 5,
+        },
+        valid: false,
+        touched: false,
+      },
+      publication_year: {
+        elementType: "input",
+        elementConfig: {
+          type: "number",
+          placeholder: "Año de publicacion",
+        },
+        value: "",
+        validation: {
+          required: true,
+          minLength: 3,
         },
         valid: false,
         touched: false,
@@ -69,6 +85,20 @@ class Home extends Component {
         valid: false,
         touched: false,
       },
+      number_pages: {
+        elementType: "input",
+        elementConfig: {
+          type: "number",
+          placeholder: "Numero de paginas",
+        },
+        value: "",
+        validation: {
+          required: true,
+          minLength: 3,
+        },
+        valid: false,
+        touched: false,
+      },
       file: {
         elementType: "file",
         elementConfig: {
@@ -77,7 +107,7 @@ class Home extends Component {
         },
         value: "",
         validation: {
-          required: true,
+          isFile: true,
         },
         valid: false,
         touched: false,
@@ -95,6 +125,10 @@ class Home extends Component {
 
     if (rules.required) {
       isValid = value.trim() !== "" && isValid;
+    }
+
+    if (rules.isFile) {
+      isValid = value !== null && isValid;
     }
 
     if (rules.minLength) {
@@ -139,10 +173,31 @@ class Home extends Component {
     this.setState({ controls: updatedControls, formIsValid: formIsValid });
   };
 
-  fileSelectedHandler = async (event) => {
-    const file = event.target.files[0];
-    const base64File = await this.convertBase64(file);
-    this.setState({ selectedFile: base64File });
+  fileSelectedHandler = async (event, controlName) => {
+    const selectedFile = event.target.files[0];
+    const base64File = await this.convertBase64(selectedFile);
+
+    const updatedControls = {
+      ...this.state.controls,
+      [controlName]: {
+        ...this.state.controls[controlName],
+        value: base64File,
+        valid: this.checkValidity(
+          base64File,
+          this.state.controls[controlName].validation
+        ),
+        touched: true,
+      },
+    };
+
+    console.log(updatedControls);
+
+    let formIsValid = true;
+    for (let inputIdentifier in updatedControls) {
+      formIsValid = updatedControls[inputIdentifier].valid && formIsValid;
+    }
+
+    this.setState({ controls: updatedControls, formIsValid: formIsValid });
   };
 
   convertBase64 = (file) => {
@@ -163,14 +218,19 @@ class Home extends Component {
       return;
     }
 
+    if (!isBase64(this.state.controls.file.value, { mimeRequired: true })) {
+      console.log("No es base64");
+      return;
+    }
+
     const formData = {
-      title: this.state.title,
-      description: this.state.description,
-      publication_year: this.state.publication_year,
-      author: this.state.author,
-      language: this.state.language,
-      number_pages: parseInt(this.state.number_pages),
-      selectedFile: this.state.selectedFile,
+      title: this.state.controls.title.value,
+      description: this.state.controls.description.value,
+      publication_year: this.state.controls.publication_year.value,
+      author: this.state.controls.author.value,
+      language: this.state.controls.language.value,
+      number_pages: parseInt(this.state.controls.number_pages.value),
+      selectedFile: this.state.controls.file.value,
     };
 
     console.log("formdata", formData);
@@ -208,11 +268,19 @@ class Home extends Component {
         key={formElement.id}
         elementType={formElement.config.elementType}
         elementConfig={formElement.config.elementConfig}
-        value={formElement.config.value}
+        value={
+          formElement.config.elementType === "file"
+            ? ""
+            : formElement.config.value
+        }
         invalid={!formElement.config.valid}
         shouldValidate={formElement.config.validation}
         touched={formElement.config.touched}
-        changed={(event) => this.inputChangedHandler(event, formElement.id)}
+        changed={
+          formElement.config.elementType === "file"
+            ? (event) => this.fileSelectedHandler(event, formElement.id)
+            : (event) => this.inputChangedHandler(event, formElement.id)
+        }
       />
     ));
 

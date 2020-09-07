@@ -6,10 +6,12 @@ import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 
 const Input = (props) => {
   let inputElement = null;
+  let validationError = null;
 
   let invalid = "";
   if (props.invalid && props.touched) {
     invalid = "invalid";
+    validationError = <p className="error__message">Ingrese un valor valido</p>;
   }
 
   switch (props.elementType) {
@@ -37,8 +39,8 @@ const Input = (props) => {
       inputElement = (
         <div>
           <input
-            name="file-input"
             id="file-input"
+            accept="application/pdf"
             className={`input__file ${invalid}`}
             {...props.elementConfig}
             value={props.value}
@@ -62,7 +64,12 @@ const Input = (props) => {
       );
   }
 
-  return <div className="input__container">{inputElement}</div>;
+  return (
+    <div className="input__container">
+      {inputElement}
+      {validationError}
+    </div>
+  );
 };
 
 export default Input;

@@ -37,11 +37,17 @@
   z-index: -1;
 }
 
+.inputfile__label:hover {
+  color: #000;
+  background-color: #ff0033;
+  transition: all 0.2s;
+}
+
 .inputfile__label {
   font-size: 14px;
   font-weight: 600;
   color: #fff;
-  background-color: #ff0033;
+  background-color: #be161e;
   display: inline-block;
   transition: all 0.5s;
   cursor: pointer;
@@ -60,4 +66,9 @@
 .invalid {
   border: 1px solid red;
   background-color: #ff0033;
+}
+
+.error__message {
+  color: red;
+  margin: 5px 0;
 }
