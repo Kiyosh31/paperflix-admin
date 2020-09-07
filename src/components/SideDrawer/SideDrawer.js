@@ -1,6 +1,8 @@
 import React from "react";
 import "./SideDrawer.css";
 
+import NavigationItems from "components/NavigationItems/NavigationItems";
+
 const SideDrawer = (props) => {
   let drawerClasses = ["side-drawer"];
   if (props.show) {
@@ -9,14 +11,7 @@ const SideDrawer = (props) => {
 
   return (
     <nav className={drawerClasses.join(" ")}>
-      <ul>
-        <li>
-          <a href="/">Agregar Papers</a>
-        </li>
-        <li>
-          <a href="/">Eliminar Papers</a>
-        </li>
-      </ul>
+      <NavigationItems />
     </nav>
   );
 };

@@ -3,7 +3,8 @@ import "./Toolbar.css";
 
 import DrawerToggleButton from "components/DrawerToggleButton/DrawerToggleButton";
 import Logo from "assets/img/logo.png";
-import { Link, Route } from "react-router-dom";
+import Avatar from "assets/img/avatar.png";
+import { Link } from "react-router-dom";
 
 const Toolbar = (props) => {
   return (
@@ -22,7 +23,7 @@ const Toolbar = (props) => {
           <ul>
             <li>
               <Link to="/" className="link">
-                Profile
+                <img className="avatar" src={Avatar} alt="Paperflix-avatar" />
               </Link>
             </li>
           </ul>

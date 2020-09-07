@@ -1,0 +1,7 @@
+.navigation__items {
+  height: 100%;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

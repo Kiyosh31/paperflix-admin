@@ -219,7 +219,7 @@ class Home extends Component {
         <Toolbar drawerClickHandler={this.drawerToggleClickHandler} />
         <SideDrawer show={this.state.sideDrawerOpen} />
         {backdrop}
-        <form style={{ marginTop: "56px" }} onSubmit={this.submitHandler}>
+        <form style={{ marginTop: "80px" }} onSubmit={this.submitHandler}>
           {form}
           <Button btnType="submit" disabled={!this.state.formIsValid}>
             Enviar

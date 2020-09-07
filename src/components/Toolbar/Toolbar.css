@@ -11,8 +11,14 @@
   margin-left: 1rem;
 }
 
-.toolbar__logo img {
-  width: 90px;
+.logo {
+  width: 80px;
+  object-fit: contain;
+}
+
+.avatar {
+  width: 30px;
+  object-fit: contain;
 }
 
 .spacer {
@@ -35,19 +41,4 @@
 
 .toolbar_navigation-items li {
   padding: 0 0.5rem;
-}
-
-.link {
-  color: white;
-  text-decoration: none;
-}
-
-.toolbar_navigation-items .link {
-  color: white;
-  text-decoration: none;
-}
-
-.toolbar_navigation-items a:hover,
-.toolbar_navigation-items a:active {
-  color: orange;
 }

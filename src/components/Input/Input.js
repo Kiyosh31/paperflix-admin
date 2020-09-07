@@ -22,7 +22,7 @@ const Input = (props) => {
       break;
     case "textarea":
       inputElement = (
-        <input
+        <textarea
           className={`input ${invalid}`}
           {...props.elementConfig}
           value={props.value}
@@ -33,7 +33,7 @@ const Input = (props) => {
     case "file":
       inputElement = (
         <input
-          className={`input ${invalid}`}
+          className={`input__file ${invalid}`}
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
