@@ -2,16 +2,17 @@ import React, { Component } from "react";
 
 import Toolbar from "components/Toolbar/Toolbar";
 import Footer from "components/Footer/Footer";
-import CreatePaper from "containers/CreatePaper/CreatePaper";
+import FormBox from "components/FormBox/FormBox";
+import Title from "components/Title/Title";
 
 class Home extends Component {
   render() {
     return (
       <div>
         <Toolbar />
-
-        <CreatePaper />
-
+        <FormBox>
+          <Title>Bienvenido Administrador</Title>
+        </FormBox>
         <Footer />
       </div>
     );

@@ -6,7 +6,9 @@ import Home from "containers/Home/Home";
 import NotFound from "containers/NotFound/NotFound";
 import ProtectedRoute from "components/ProtectedRoute/ProtectedRoute";
 import { Route, Switch } from "react-router-dom";
+import CreatePaper from "containers/CreatePaper/CreatePaper";
 import DeletePaper from "containers/DeletePaper/DeletePaper";
+import CreateCategory from "containers/CreateCategory/CreateCategory";
 
 class App extends Component {
   render() {
@@ -14,8 +16,11 @@ class App extends Component {
       <div className="App">
         <Switch>
           <Route path="/" exact component={Login} />
-          <ProtectedRoute path="/home/create-paper" component={Home} />
-          <ProtectedRoute path="/home/delete-paper" component={DeletePaper} />
+          <ProtectedRoute path="/home" component={Home} />
+          <ProtectedRoute path="/create-paper" component={CreatePaper} />
+          <ProtectedRoute path="/delete-paper" component={DeletePaper} />
+          <ProtectedRoute path="/create-category" component={CreateCategory} />
+          <ProtectedRoute path="/edit-category" component={CreateCategory} />
           <Route path="/*" component={NotFound} />
         </Switch>
       </div>

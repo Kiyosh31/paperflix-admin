@@ -2,23 +2,21 @@ import React from "react";
 import "./NavigationItems.css";
 
 import NavigationItem from "components/NavigationItem/NavigationItem";
-import Logo from "components/Logo/Logo";
-import Avatar from "components/Avatar/Avatar";
 
 const NavigationItems = () => {
   return (
     <ul className="nav__items">
-      <NavigationItem link="/home">
-        <Logo />
-      </NavigationItem>
-      <NavigationItem link="/home">
-        <Avatar />
-      </NavigationItem>
-      <NavigationItem link="/home/create-paper" exact active>
+      <NavigationItem link="/create-paper" strict>
         Cargar Documento
       </NavigationItem>
-      <NavigationItem link="/home/delete-paper">
+      <NavigationItem link="/delete-paper" strict>
         Eliminar Documento
+      </NavigationItem>
+      <NavigationItem link="/create-category" strict>
+        Crear Categoria
+      </NavigationItem>
+      <NavigationItem link="/edit-category" strict>
+        Editar Categoria
       </NavigationItem>
     </ul>
   );

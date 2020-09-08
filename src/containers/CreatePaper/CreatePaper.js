@@ -7,6 +7,8 @@ import Title from "components/Title/Title";
 import FormBox from "components/FormBox/FormBox";
 
 import isBase64 from "is-base64";
+import Toolbar from "components/Toolbar/Toolbar";
+import Footer from "components/Footer/Footer";
 
 const initialState = {
   controls: {
@@ -378,6 +380,7 @@ class CreatePaper extends Component {
 
     return (
       <div>
+        <Toolbar />
         <FormBox>
           <Title home>Agregar Documento</Title>
           <form
@@ -390,6 +393,7 @@ class CreatePaper extends Component {
             </Button>
           </form>
         </FormBox>
+        <Footer />
       </div>
     );
   }

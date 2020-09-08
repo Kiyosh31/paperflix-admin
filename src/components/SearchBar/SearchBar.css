@@ -1,4 +1,4 @@
-.avatar__container {
+.searchbar__container {
   background-color: #111;
   padding: 20px;
   height: 100%;
@@ -6,6 +6,6 @@
   border-radius: 5px;
 }
 
-.avatar__container img {
+.icon {
   height: 100%;
 }
