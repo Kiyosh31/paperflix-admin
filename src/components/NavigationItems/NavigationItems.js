@@ -6,8 +6,11 @@ import NavigationItem from "components/NavigationItem/NavigationItem";
 const NavigationItems = () => {
   return (
     <ul className="nav__items">
-      <NavigationItem link="/create-paper" strict>
+      <NavigationItem link="/create-paper" strict active>
         Cargar Documento
+      </NavigationItem>
+      <NavigationItem link="/edit-paper" strict>
+        Editar Documento
       </NavigationItem>
       <NavigationItem link="/delete-paper" strict>
         Eliminar Documento

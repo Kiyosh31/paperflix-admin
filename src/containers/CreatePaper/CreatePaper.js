@@ -337,13 +337,15 @@ class CreatePaper extends Component {
       selectedFile: this.state.controls.file.value,
     };
 
-    console.log("formdata", formData);
+    // console.log("formdata", formData);
 
     instance
       .post("paper-create/", formData)
       .then((response) => {
         console.log(response);
-        this.clearForm();
+        if (response.status === 200) {
+          this.clearForm();
+        }
       })
       .catch((err) => console.log(err));
   };

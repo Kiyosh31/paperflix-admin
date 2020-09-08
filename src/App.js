@@ -9,6 +9,8 @@ import { Route, Switch } from "react-router-dom";
 import CreatePaper from "containers/CreatePaper/CreatePaper";
 import DeletePaper from "containers/DeletePaper/DeletePaper";
 import CreateCategory from "containers/CreateCategory/CreateCategory";
+import EditPaper from "containers/EditPaper/EditPaper";
+import EditCategory from "containers/EditCategory/EditCategory";
 
 class App extends Component {
   render() {
@@ -18,9 +20,10 @@ class App extends Component {
           <Route path="/" exact component={Login} />
           <ProtectedRoute path="/home" component={Home} />
           <ProtectedRoute path="/create-paper" component={CreatePaper} />
+          <ProtectedRoute path="/edit-paper" component={EditPaper} />
           <ProtectedRoute path="/delete-paper" component={DeletePaper} />
           <ProtectedRoute path="/create-category" component={CreateCategory} />
-          <ProtectedRoute path="/edit-category" component={CreateCategory} />
+          <ProtectedRoute path="/edit-category" component={EditCategory} />
           <Route path="/*" component={NotFound} />
         </Switch>
       </div>
