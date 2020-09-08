@@ -1,10 +1,21 @@
-import React from "react";
-import { Component } from "react";
+import React, { Component } from "react";
 
-class DeletePaper extends Component {
+import Toolbar from "components/Toolbar/Toolbar";
+import Footer from "components/Footer/Footer";
+import Title from "components/Title/Title";
+
+class Home extends Component {
   render() {
-    return;
+    return (
+      <div>
+        <Toolbar />
+
+        <Title>Hola</Title>
+
+        <Footer />
+      </div>
+    );
   }
 }
 
-export default DeletePaper;
+export default Home;

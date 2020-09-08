@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import Input from "components/Input/Input";
 import Button from "components/Button/Button";
 import instance from "axios-instance";
-import Footer from "components/Footer/Footer";
 import Title from "components/Title/Title";
 import FormBox from "components/FormBox/FormBox";
 

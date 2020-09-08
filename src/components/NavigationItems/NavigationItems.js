@@ -14,10 +14,10 @@ const NavigationItems = () => {
       <NavigationItem link="/home">
         <Avatar />
       </NavigationItem>
-      <NavigationItem link="/home" active>
+      <NavigationItem link="/home/create-paper" exact active>
         Cargar Documento
       </NavigationItem>
-      <NavigationItem link="/home" active>
+      <NavigationItem link="/home/delete-paper">
         Eliminar Documento
       </NavigationItem>
     </ul>

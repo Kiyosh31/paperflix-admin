@@ -20,7 +20,7 @@ class NotFound extends Component {
             <p style={{ color: "#fff" }}>
               The page you're looking for was not found
             </p>
-            <Link to={auth.isAuthenticated() ? "/home" : "/"}>
+            <Link to={auth.isAuthenticated() ? "/home/create-paper" : "/"}>
               <Button>Go to {auth.isAuthenticated() ? "Home" : "Login"}</Button>
             </Link>
           </Box>
