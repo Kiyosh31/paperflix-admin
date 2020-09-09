@@ -35,6 +35,24 @@ const Input = (props) => {
         />
       );
       break;
+    case "select":
+      inputElement = (
+        <div>
+          <label className="select__label">Categoria</label>
+          <select
+            className="input__select"
+            value={props.value}
+            onChange={props.changed}
+          >
+            {props.elementConfig.options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.displayValue}
+              </option>
+            ))}
+          </select>
+        </div>
+      );
+      break;
     case "file":
       inputElement = (
         <div>

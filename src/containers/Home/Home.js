@@ -11,7 +11,7 @@ class Home extends Component {
     return (
       <div>
         <Toolbar />
-        <FormBox>
+        <FormBox fill>
           <Title>Bienvenido Administrador</Title>
           <Subtitle>Papers Activos</Subtitle>
           <Subtitle>Categorias Activas</Subtitle>

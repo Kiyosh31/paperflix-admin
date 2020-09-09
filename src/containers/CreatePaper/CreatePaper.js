@@ -109,6 +109,17 @@ const initialState = {
       valid: false,
       touched: false,
     },
+    category: {
+      elementType: "select",
+      elementConfig: {
+        options: [
+          { value: "uno", displayValue: "Rapido" },
+          { value: "dos", displayValue: "Lento" },
+        ],
+      },
+      value: "",
+      valid: true,
+    },
   },
   formIsValid: false,
 };
@@ -213,9 +224,41 @@ class CreatePaper extends Component {
         valid: false,
         touched: false,
       },
+      category: {
+        elementType: "select",
+        elementConfig: {
+          // options: [{ value: "", displayValue: "Ciencia" }],
+          options: [],
+        },
+        value: "",
+        valid: true,
+      },
     },
     formIsValid: false,
   };
+
+  categoryListhandler = (categoryList) => {
+    let categoryUpdated = { ...this.state.controls.category };
+
+    for (let key in categoryList) {
+      categoryUpdated.elementConfig.options.push({
+        value: categoryList[key].category,
+        displayValue: categoryList[key].category,
+      });
+    }
+    this.setState({ category: categoryUpdated });
+  };
+
+  componentDidMount() {
+    instance
+      .get("category-list/")
+      .then((response) => {
+        if (response.status === 200) {
+          this.categoryListhandler(response.data);
+        }
+      })
+      .catch((err) => console.log(err));
+  }
 
   checkValidity(value, rules) {
     let isValid = true;

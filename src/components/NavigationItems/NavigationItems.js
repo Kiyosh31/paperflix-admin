@@ -7,7 +7,7 @@ const NavigationItems = () => {
   return (
     <ul className="nav__items">
       <NavigationItem link="/create-paper" strict active>
-        Cargar Documento
+        Crear Documento
       </NavigationItem>
       <NavigationItem link="/edit-paper" strict>
         Editar Documento

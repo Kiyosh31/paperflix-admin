@@ -123,7 +123,7 @@ class CreateCategory extends Component {
       .post("category-create/", formData)
       .then((response) => {
         console.log(response);
-        if (response.status === 200) {
+        if (response.status === 201) {
           this.clearForm();
         }
       })
@@ -155,7 +155,7 @@ class CreateCategory extends Component {
     return (
       <div>
         <Toolbar />
-        <FormBox>
+        <FormBox fill>
           <Title>Crear Categoria</Title>
           <form onSubmit={this.submitHandler}>
             {form}

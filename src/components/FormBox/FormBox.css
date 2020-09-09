@@ -1,6 +1,9 @@
 .form__box {
-  height: 100%;
   margin-top: 75px;
   margin-left: 20px;
   margin-bottom: 30px;
+}
+
+.fill {
+  height: 502px;
 }
