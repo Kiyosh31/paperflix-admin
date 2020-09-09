@@ -5,10 +5,10 @@ import Button from "components/Button/Button";
 import instance from "axios-instance";
 import Title from "components/Title/Title";
 import FormBox from "components/FormBox/FormBox";
-
-import isBase64 from "is-base64";
 import Toolbar from "components/Toolbar/Toolbar";
 import Footer from "components/Footer/Footer";
+
+import isBase64 from "is-base64";
 
 const initialState = {
   controls: {
