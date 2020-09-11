@@ -11,7 +11,7 @@ const TableButton = (props) => {
   }
 
   return (
-    <div className="">
+    <div>
       <button
         className={btnStyle.join(" ")}
         disabled={props.disabled}

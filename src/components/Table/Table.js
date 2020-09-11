@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Table.css";
 
 import TableButton from "components/TableButton/TableButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import Modal from "components/Modal/Modal";
+import PaperFile from "components/PaperFile/PaperFile";
 
 const Table = (props) => {
+  const [modal, setModal] = useState(false);
+
+  function modalHandler() {
+    setModal(!modal);
+  }
+
   const tbodyElements = [];
   for (let key in props.data) {
     tbodyElements.push({
@@ -27,28 +35,37 @@ const Table = (props) => {
       <td>{paper.author}</td>
       <td>{paper.language}</td>
       <td>
-        <TableButton>
+        <TableButton clicked={modalHandler}>
           <FontAwesomeIcon icon={faFilePdf} />
         </TableButton>
       </td>
       <td>
-        <TableButton edit>Editar</TableButton>
+        <TableButton edit clicked={modalHandler}>
+          Editar
+        </TableButton>
         <TableButton delete>Eliminar</TableButton>
       </td>
     </tr>
   ));
 
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          {props.header.map((head, index) => (
-            <th key={index}>{head}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>{body}</tbody>
-    </table>
+    <div>
+      {modal && (
+        <Modal show={modal} modalClosedByBackdrop={modalHandler}>
+          <PaperFile />
+        </Modal>
+      )}
+      <table className="table">
+        <thead>
+          <tr>
+            {props.header.map((head, index) => (
+              <th key={index}>{head}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>{body}</tbody>
+      </table>
+    </div>
   );
 };
 
