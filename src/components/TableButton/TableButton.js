@@ -2,12 +2,12 @@ import React from "react";
 import "./TableButton.css";
 
 const TableButton = (props) => {
-  let btnStyle = ["button"];
+  let btnStyle = ["table__button"];
   if (props.edit) {
-    btnStyle.push("button__edit");
+    btnStyle.push("table__button__edit");
   }
   if (props.delete) {
-    btnStyle.push("button__delete");
+    btnStyle.push("table__button__delete");
   }
 
   return (

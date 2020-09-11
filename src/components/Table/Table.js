@@ -35,12 +35,12 @@ const Table = (props) => {
       <td>{paper.author}</td>
       <td>{paper.language}</td>
       <td>
-        <TableButton clicked={modalHandler}>
+        <TableButton clicked={() => modalHandler(paper.id_paper)}>
           <FontAwesomeIcon icon={faFilePdf} />
         </TableButton>
       </td>
       <td>
-        <TableButton edit clicked={modalHandler}>
+        <TableButton edit clicked={() => modalHandler(paper)}>
           Editar
         </TableButton>
         <TableButton delete>Eliminar</TableButton>
