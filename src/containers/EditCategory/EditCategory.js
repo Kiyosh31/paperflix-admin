@@ -3,11 +3,64 @@ import Toolbar from "components/Toolbar/Toolbar";
 import Footer from "components/Footer/Footer";
 import FormBox from "components/FormBox/FormBox";
 import Title from "components/Title/Title";
+import Modal from "components/Modal/Modal";
+import Spinner from "components/Spinner/Spinner";
+
+import instance from "axios-instance";
 
 class EditCategory extends Component {
+  state = {
+    categories: null,
+    loading: true,
+    showModal: true,
+  };
+
+  componentDidMount() {
+    instance
+      .get("category-list/")
+      .then((response) => {
+        this.setState({
+          categories: response.data,
+          showModal: false,
+          loading: false,
+        });
+        // console.log(this.state.categories);
+      })
+      .catch((err) => {
+        this.setState({ showModal: false, loading: false });
+        console.log(err);
+      });
+  }
+
+  modalHandler = () => {
+    this.setState({ showModal: !this.state.showModal });
+  };
+
   render() {
+    let spinner = null;
+    if (this.state.loading) {
+      spinner = <Spinner />;
+    }
+
+    let modal = null;
+    if (this.state.showModal) {
+      modal = (
+        <Modal
+          clicked={this.modalHandler}
+          show={this.state.showModal}
+          modalClosedByBackdrop={this.modalHandler}
+          transparent
+        >
+          {spinner}
+        </Modal>
+      );
+    } else {
+      modal = null;
+    }
+
     return (
       <div>
+        {modal}
         <Toolbar />
         <FormBox>
           <Title>Editar Categoria</Title>

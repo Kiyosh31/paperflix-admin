@@ -12,9 +12,6 @@ const NavigationItems = () => {
       <NavigationItem link="/edit-paper" strict>
         Editar Documento
       </NavigationItem>
-      <NavigationItem link="/delete-paper" strict>
-        Eliminar Documento
-      </NavigationItem>
       <NavigationItem link="/create-category" strict>
         Crear Categoria
       </NavigationItem>

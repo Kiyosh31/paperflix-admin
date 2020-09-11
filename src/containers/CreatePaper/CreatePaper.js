@@ -113,8 +113,7 @@ const initialState = {
       elementType: "select",
       elementConfig: {
         options: [
-          { value: "uno", displayValue: "Rapido" },
-          { value: "dos", displayValue: "Lento" },
+          // { value: "uno", displayValue: "Rapido" },
         ],
       },
       value: "",
@@ -355,6 +354,7 @@ class CreatePaper extends Component {
 
   clearForm = () => {
     this.setState(initialState);
+    this.componentDidMount();
   };
 
   submitHandler = (event) => {
@@ -386,7 +386,7 @@ class CreatePaper extends Component {
       .post("paper-create/", formData)
       .then((response) => {
         console.log(response);
-        if (response.status === 200) {
+        if (response.status === 201) {
           this.clearForm();
         }
       })
