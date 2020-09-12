@@ -1,132 +1,12 @@
 import React, { Component } from "react";
+import "./ModifyForm.css";
 
-import Input from "components/Input/Input";
-import Button from "components/Button/Button";
-import instance from "axios-instance";
 import Title from "components/Title/Title";
-import FormBox from "components/FormBox/FormBox";
-import Toolbar from "components/Toolbar/Toolbar";
-import Footer from "components/Footer/Footer";
+import Button from "components/Button/Button";
+import Input from "components/Input/Input";
+import instance from "axios-instance";
 
-import isBase64 from "is-base64";
-import Modal from "components/Modal/Modal";
-import CreatedContent from "components/CreatedContent/CreatedContent";
-
-const initialState = {
-  controls: {
-    title: {
-      elementType: "input",
-      elementConfig: {
-        type: "text",
-        placeholder: "Titulo",
-      },
-      value: "",
-      validation: {
-        required: true,
-        minLength: 5,
-      },
-      valid: false,
-      touched: false,
-    },
-    description: {
-      elementType: "textarea",
-      elementConfig: {
-        type: "text",
-        placeholder: "Descripcion",
-      },
-      value: "",
-      validation: {
-        required: true,
-        minLength: 5,
-        maxLength: 255,
-      },
-      valid: false,
-      touched: false,
-    },
-    publication_year: {
-      elementType: "input",
-      elementConfig: {
-        type: "number",
-        placeholder: "Año de publicacion",
-      },
-      value: "",
-      validation: {
-        required: true,
-        minLength: 3,
-      },
-      valid: false,
-      touched: false,
-    },
-    author: {
-      elementType: "input",
-      elementConfig: {
-        type: "text",
-        placeholder: "Autor",
-      },
-      value: "",
-      validation: {
-        required: true,
-        minLength: 5,
-      },
-      valid: false,
-      touched: false,
-    },
-    language: {
-      elementType: "input",
-      elementConfig: {
-        type: "text",
-        placeholder: "Idioma",
-      },
-      value: "",
-      validation: {
-        required: true,
-        minLength: 5,
-      },
-      valid: false,
-      touched: false,
-    },
-    number_pages: {
-      elementType: "input",
-      elementConfig: {
-        type: "number",
-        placeholder: "Numero de paginas",
-      },
-      value: "",
-      validation: {
-        required: true,
-        minLength: 3,
-      },
-      valid: false,
-      touched: false,
-    },
-    file: {
-      elementType: "file",
-      elementConfig: {
-        type: "file",
-        placeholder: "",
-      },
-      value: "",
-      validation: {
-        isFile: true,
-      },
-      valid: false,
-      touched: false,
-    },
-    category: {
-      elementType: "select",
-      elementConfig: {
-        // options: [{ value: "", displayValue: "Ciencia" }],
-        options: [],
-      },
-      value: "",
-      valid: true,
-    },
-  },
-  formIsValid: false,
-  showModal: false,
-};
-
-class CreatePaper extends Component {
+class ModifyForm extends Component {
   state = {
     controls: {
       title: {
@@ -135,13 +15,13 @@ class CreatePaper extends Component {
           type: "text",
           placeholder: "Titulo",
         },
-        value: "",
+        value: this.props.paper.description,
         validation: {
           required: true,
           minLength: 5,
         },
-        valid: false,
-        touched: false,
+        valid: true,
+        touched: true,
       },
       description: {
         elementType: "textarea",
@@ -149,14 +29,14 @@ class CreatePaper extends Component {
           type: "text",
           placeholder: "Descripcion",
         },
-        value: "",
+        value: this.props.paper.description,
         validation: {
           required: true,
           minLength: 5,
           maxLength: 255,
         },
-        valid: false,
-        touched: false,
+        valid: true,
+        touched: true,
       },
       publication_year: {
         elementType: "input",
@@ -164,13 +44,13 @@ class CreatePaper extends Component {
           type: "number",
           placeholder: "Año de publicacion",
         },
-        value: "",
+        value: this.props.paper.publication_year,
         validation: {
           required: true,
           minLength: 3,
         },
-        valid: false,
-        touched: false,
+        valid: true,
+        touched: true,
       },
       author: {
         elementType: "input",
@@ -178,13 +58,13 @@ class CreatePaper extends Component {
           type: "text",
           placeholder: "Autor",
         },
-        value: "",
+        value: this.props.paper.author,
         validation: {
           required: true,
           minLength: 5,
         },
-        valid: false,
-        touched: false,
+        valid: true,
+        touched: true,
       },
       language: {
         elementType: "input",
@@ -192,13 +72,13 @@ class CreatePaper extends Component {
           type: "text",
           placeholder: "Idioma",
         },
-        value: "",
+        value: this.props.paper.language,
         validation: {
           required: true,
           minLength: 5,
         },
-        valid: false,
-        touched: false,
+        valid: true,
+        touched: true,
       },
       number_pages: {
         elementType: "input",
@@ -206,13 +86,13 @@ class CreatePaper extends Component {
           type: "number",
           placeholder: "Numero de paginas",
         },
-        value: "",
+        value: this.props.paper.number_pages,
         validation: {
           required: true,
           minLength: 3,
         },
-        valid: false,
-        touched: false,
+        valid: true,
+        touched: true,
       },
       file: {
         elementType: "file",
@@ -230,38 +110,39 @@ class CreatePaper extends Component {
       category: {
         elementType: "select",
         elementConfig: {
-          // options: [{ value: "", displayValue: "Ciencia" }],
-          options: [],
+          options: [
+            // { value: "uno", displayValue: "Rapido" },
+          ],
         },
         value: "",
         valid: true,
       },
     },
     formIsValid: false,
-    showModal: false,
   };
 
-  categoryListhandler = (categoryList) => {
-    let categoryUpdated = { ...this.state.controls.category };
-
-    for (let key in categoryList) {
-      categoryUpdated.elementConfig.options.push({
-        value: categoryList[key].category,
-        displayValue: categoryList[key].category,
-      });
-    }
-    this.setState({ category: categoryUpdated });
-  };
-
-  componentDidMount() {
+  getCategoryList = () => {
     instance
       .get("category-list/")
       .then((response) => {
         if (response.status === 200) {
-          this.categoryListhandler(response.data);
+          let categoryUpdated = { ...this.state.controls.category };
+          let categoryList = response.data;
+
+          for (let key in categoryList) {
+            categoryUpdated.elementConfig.options.push({
+              value: categoryList[key].category,
+              displayValue: categoryList[key].category,
+            });
+          }
+          this.setState({ category: categoryUpdated });
         }
       })
       .catch((err) => console.log(err));
+  };
+
+  componentDidMount() {
+    this.getCategoryList();
   }
 
   checkValidity(value, rules) {
@@ -337,7 +218,7 @@ class CreatePaper extends Component {
       },
     };
 
-    console.log(updatedControls);
+    // console.log(updatedControls);
 
     let formIsValid = true;
     for (let inputIdentifier in updatedControls) {
@@ -357,21 +238,11 @@ class CreatePaper extends Component {
     });
   };
 
-  clearForm = () => {
-    this.setState(initialState);
-    this.componentDidMount();
-  };
-
   submitHandler = (event) => {
     event.preventDefault();
 
     if (!this.state.formIsValid) {
       console.log("No es valido");
-      return;
-    }
-
-    if (!isBase64(this.state.controls.file.value, { mimeRequired: true })) {
-      console.log("No es base64");
       return;
     }
 
@@ -385,22 +256,15 @@ class CreatePaper extends Component {
       selectedFile: this.state.controls.file.value,
     };
 
-    // console.log("formdata", formData);
-
     instance
-      .post("paper-create/", formData)
+      .put(`paper-update/${this.props.paper.id_paper}/`, formData)
       .then((response) => {
         console.log(response);
         if (response.status === 201) {
-          this.clearForm();
-          this.modalHandler();
+          window.location.reload();
         }
       })
       .catch((err) => console.log(err));
-  };
-
-  modalHandler = () => {
-    this.setState({ showModal: !this.state.showModal });
   };
 
   render() {
@@ -433,43 +297,18 @@ class CreatePaper extends Component {
       />
     ));
 
-    let modal = null;
-    if (this.state.showModal) {
-      modal = (
-        <Modal
-          clicked={this.modalHandler}
-          show={this.state.showModal}
-          modalClosedByBackdrop={this.modalHandler}
-        >
-          <CreatedContent title="Documento" clicked={this.modalHandler}>
-            Documento creado con exito!
-          </CreatedContent>
-        </Modal>
-      );
-    } else {
-      modal = null;
-    }
-
     return (
       <div>
-        <Toolbar />
-        {modal}
-        <FormBox>
-          <Title home>Agregar Documento</Title>
-          <form
-            style={{ marginTop: "80px", margin: "20px" }}
-            onSubmit={this.submitHandler}
-          >
-            {form}
-            <Button btnType="submit" disabled={!this.state.formIsValid}>
-              Enviar
-            </Button>
-          </form>
-        </FormBox>
-        <Footer />
+        <Title home>Editar Documento</Title>
+        <form onSubmit={this.submitHandler}>
+          {form}
+          <Button btnType="submit" disabled={!this.state.formIsValid}>
+            Guardar
+          </Button>
+        </form>
       </div>
     );
   }
 }
 
-export default CreatePaper;
+export default ModifyForm;

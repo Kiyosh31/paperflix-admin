@@ -21,3 +21,7 @@
   vertical-align: middle;
   border-bottom: 2px solid #ffffff;
 }
+
+.table__description {
+  width: 20%;
+}

@@ -17,7 +17,7 @@ const PaperFile = (props) => {
         setPaper(response.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [props.id_paper]);
 
   return (
     <div>

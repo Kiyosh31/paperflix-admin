@@ -7,6 +7,8 @@ import Title from "components/Title/Title";
 import Input from "components/Input/Input";
 import Button from "components/Button/Button";
 import instance from "axios-instance";
+import Modal from "components/Modal/Modal";
+import CreatedContent from "components/CreatedContent/CreatedContent";
 
 const initialState = {
   controls: {
@@ -25,6 +27,7 @@ const initialState = {
       touched: false,
     },
   },
+  showModa: false,
 };
 class CreateCategory extends Component {
   state = {
@@ -45,6 +48,7 @@ class CreateCategory extends Component {
       },
     },
     formIsValid: false,
+    showModal: false,
   };
 
   checkValidity(value, rules) {
@@ -125,9 +129,14 @@ class CreateCategory extends Component {
         console.log(response);
         if (response.status === 201) {
           this.clearForm();
+          this.modalHandler();
         }
       })
       .catch((err) => console.log(err));
+  };
+
+  modalHandler = () => {
+    this.setState({ showModal: !this.state.showModal });
   };
 
   render() {
@@ -152,9 +161,27 @@ class CreateCategory extends Component {
       />
     ));
 
+    let modal = null;
+    if (this.state.showModal) {
+      modal = (
+        <Modal
+          clicked={this.modalHandler}
+          show={this.state.showModal}
+          modalClosedByBackdrop={this.modalHandler}
+        >
+          <CreatedContent title="Categoria" clicked={this.modalHandler}>
+            Categoria creada con exito!
+          </CreatedContent>
+        </Modal>
+      );
+    } else {
+      modal = null;
+    }
+
     return (
       <div>
         <Toolbar />
+        {modal}
         <FormBox fill>
           <Title>Crear Categoria</Title>
           <form onSubmit={this.submitHandler}>
