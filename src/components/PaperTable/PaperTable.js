@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./EditTable.css";
+import "./PaperTable.css";
 
 import TableButton from "components/TableButton/TableButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,7 +9,7 @@ import PaperFile from "components/PaperFile/PaperFile";
 import ModifyForm from "components/ModifyForm/ModifyForm";
 import DeleteForm from "components/DeleteForm/DeleteForm";
 
-const EditTable = (props) => {
+const PaperTable = (props) => {
   const [modal, setModal] = useState(false);
   const [modalContent, setModalContent] = useState();
 
@@ -96,4 +96,4 @@ const EditTable = (props) => {
   );
 };
 
-export default EditTable;
+export default PaperTable;

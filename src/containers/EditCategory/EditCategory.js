@@ -7,12 +7,14 @@ import Modal from "components/Modal/Modal";
 import Spinner from "components/Spinner/Spinner";
 
 import instance from "axios-instance";
+import CategoryTable from "components/CategoryTable/CategoryTable";
 
 class EditCategory extends Component {
   state = {
     categories: null,
     loading: true,
     showModal: true,
+    header: ["id", "Categoria", "Accion"],
   };
 
   componentDidMount() {
@@ -64,6 +66,10 @@ class EditCategory extends Component {
         <Toolbar />
         <FormBox>
           <Title>Editar Categoria</Title>
+          <CategoryTable
+            header={this.state.header}
+            data={this.state.categories}
+          />
         </FormBox>
         <Footer />
       </div>

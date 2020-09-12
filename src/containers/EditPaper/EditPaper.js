@@ -4,7 +4,7 @@ import Footer from "components/Footer/Footer";
 import FormBox from "components/FormBox/FormBox";
 import Title from "components/Title/Title";
 import instance from "axios-instance";
-import EditTable from "components/EditTable/EditTable";
+import PaperTable from "components/PaperTable/PaperTable";
 import Modal from "components/Modal/Modal";
 import Spinner from "components/Spinner/Spinner";
 
@@ -74,7 +74,7 @@ class EditPaper extends Component {
         <Toolbar />
         <FormBox>
           <Title>Editar Documento</Title>
-          <EditTable header={this.state.header} data={this.state.papers} />
+          <PaperTable header={this.state.header} data={this.state.papers} />
         </FormBox>
         <Footer />
       </div>
