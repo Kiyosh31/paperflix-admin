@@ -26,7 +26,16 @@ class Auth {
     });
   }
 
-  logout() {}
+  logout() {
+    return new Promise((resolve, reject) => {
+      Cookies.remove("admin");
+      if (!this.isAuthenticated()) {
+        resolve(true);
+      }
+
+      reject(false);
+    });
+  }
 
   isAuthenticated() {
     if (Cookies.get("admin")) {

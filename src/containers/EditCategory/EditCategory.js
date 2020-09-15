@@ -8,6 +8,7 @@ import Spinner from "components/Spinner/Spinner";
 
 import instance from "axios-instance";
 import CategoryTable from "components/CategoryTable/CategoryTable";
+import SearchBar from "components/SearchBar/SearchBar";
 
 class EditCategory extends Component {
   state = {
@@ -64,6 +65,7 @@ class EditCategory extends Component {
       <div>
         {modal}
         <Toolbar />
+        <SearchBar />
         <FormBox>
           <Title>Editar Categoria</Title>
           <CategoryTable

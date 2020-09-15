@@ -7,6 +7,7 @@ import instance from "axios-instance";
 import PaperTable from "components/PaperTable/PaperTable";
 import Modal from "components/Modal/Modal";
 import Spinner from "components/Spinner/Spinner";
+import SearchBar from "components/SearchBar/SearchBar";
 
 class EditPaper extends Component {
   state = {
@@ -74,6 +75,7 @@ class EditPaper extends Component {
         <Toolbar />
         <FormBox>
           <Title>Editar Documento</Title>
+          <SearchBar />
           <PaperTable header={this.state.header} data={this.state.papers} />
         </FormBox>
         <Footer />
