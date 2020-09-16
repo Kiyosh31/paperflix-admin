@@ -4,7 +4,7 @@ import "./Toolbar.css";
 import Logo from "components/Logo/Logo";
 import NavigationItems from "components/NavigationItems/NavigationItems";
 import Avatar from "components/Avatar/Avatar";
-import SearchBar from "components/SearchBar/SearchBar";
+// import SearchIcon from "components/SearchIcon/SearchIcon";
 
 const Toolbar = () => {
   return (
@@ -14,7 +14,7 @@ const Toolbar = () => {
         <NavigationItems />
       </div>
       <nav>
-        <SearchBar />
+        {/* <SearchIcon /> */}
         <Avatar />
       </nav>
     </header>

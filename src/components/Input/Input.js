@@ -74,7 +74,7 @@ const Input = (props) => {
     default:
       inputElement = (
         <input
-          className={`input ${invalid}`}
+          className={`input__search ${invalid}`}
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}

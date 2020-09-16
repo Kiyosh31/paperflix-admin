@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import "./EditPaper.css";
+
 import Toolbar from "components/Toolbar/Toolbar";
 import Footer from "components/Footer/Footer";
 import FormBox from "components/FormBox/FormBox";
@@ -7,13 +9,11 @@ import instance from "axios-instance";
 import PaperTable from "components/PaperTable/PaperTable";
 import Modal from "components/Modal/Modal";
 import Spinner from "components/Spinner/Spinner";
-import SearchBar from "components/SearchBar/SearchBar";
+import SearchInput from "components/SearchInput/SearchInput";
 
 class EditPaper extends Component {
   state = {
     papers: null,
-    showModal: true,
-    loading: true,
     header: [
       "id",
       "Titulo",
@@ -24,6 +24,9 @@ class EditPaper extends Component {
       "Archivo",
       "Acciones",
     ],
+    showModal: true,
+    loading: true,
+    search: null,
   };
 
   componentDidMount() {
@@ -45,6 +48,10 @@ class EditPaper extends Component {
 
   modalHandler = () => {
     this.setState({ showModal: !this.state.showModal });
+  };
+
+  searchHandler = (event) => {
+    this.setState({ search: event.target.value });
   };
 
   render() {
@@ -69,14 +76,29 @@ class EditPaper extends Component {
       modal = null;
     }
 
+    let filteredPapers = null;
+    if (this.state.search === "" || this.state.search === null) {
+      filteredPapers = this.state.papers;
+    } else {
+      filteredPapers = this.state.papers.filter((paper) => {
+        return (
+          paper.title.toLowerCase().includes(this.state.search.toLowerCase()) ||
+          paper.author.toLowerCase().includes(this.state.search.toLowerCase())
+        );
+      });
+    }
+
     return (
       <div>
         {modal}
         <Toolbar />
         <FormBox>
           <Title>Editar Documento</Title>
-          <SearchBar />
-          <PaperTable header={this.state.header} data={this.state.papers} />
+          <SearchInput
+            placeholder="Buscar Documentos"
+            changed={this.searchHandler}
+          />
+          <PaperTable header={this.state.header} data={filteredPapers} />
         </FormBox>
         <Footer />
       </div>
