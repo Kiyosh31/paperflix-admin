@@ -92,7 +92,7 @@ class EditPaper extends Component {
       <div>
         {modal}
         <Toolbar />
-        <FormBox>
+        <FormBox fill>
           <Title>Editar Documento</Title>
           <SearchInput
             placeholder="Buscar Documentos |titulo| o |autor|"
