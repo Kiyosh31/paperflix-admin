@@ -95,7 +95,7 @@ class EditPaper extends Component {
         <FormBox>
           <Title>Editar Documento</Title>
           <SearchInput
-            placeholder="Buscar Documentos"
+            placeholder="Buscar Documentos |titulo| o |autor|"
             changed={this.searchHandler}
           />
           <PaperTable header={this.state.header} data={filteredPapers} />

@@ -9,6 +9,7 @@ import Spinner from "components/Spinner/Spinner";
 import instance from "axios-instance";
 import CategoryTable from "components/CategoryTable/CategoryTable";
 import SearchBar from "components/SearchIcon/SearchIcon";
+import SearchInput from "components/SearchInput/SearchInput";
 
 class EditCategory extends Component {
   state = {
@@ -16,6 +17,7 @@ class EditCategory extends Component {
     loading: true,
     showModal: true,
     header: ["id", "Categoria", "Accion"],
+    search: null,
   };
 
   componentDidMount() {
@@ -37,6 +39,10 @@ class EditCategory extends Component {
 
   modalHandler = () => {
     this.setState({ showModal: !this.state.showModal });
+  };
+
+  searchHandler = (event) => {
+    this.setState({ search: event.target.value });
   };
 
   render() {
@@ -61,6 +67,17 @@ class EditCategory extends Component {
       modal = null;
     }
 
+    let filteredCategories = null;
+    if (this.state.search === "" || this.state.search === null) {
+      filteredCategories = this.state.categories;
+    } else {
+      filteredCategories = this.state.categories.filter((category) => {
+        return category.category
+          .toLowerCase()
+          .includes(this.state.search.toLowerCase());
+      });
+    }
+
     return (
       <div>
         {modal}
@@ -68,10 +85,11 @@ class EditCategory extends Component {
         <SearchBar />
         <FormBox fill>
           <Title>Editar Categoria</Title>
-          <CategoryTable
-            header={this.state.header}
-            data={this.state.categories}
+          <SearchInput
+            placeholder="Buscar categoria"
+            changed={this.searchHandler}
           />
+          <CategoryTable header={this.state.header} data={filteredCategories} />
         </FormBox>
         <Footer />
       </div>
