@@ -14,16 +14,6 @@ import SearchInput from "components/SearchInput/SearchInput";
 class EditPaper extends Component {
   state = {
     papers: null,
-    header: [
-      "id",
-      "Titulo",
-      "Descripcion",
-      "Año Publicacion",
-      "Autor",
-      "Idioma",
-      "Archivo",
-      "Acciones",
-    ],
     showModal: true,
     loading: true,
     search: null,
@@ -92,13 +82,13 @@ class EditPaper extends Component {
       <div>
         {modal}
         <Toolbar />
-        <FormBox fill>
+        <FormBox>
           <Title>Editar Documento</Title>
           <SearchInput
             placeholder="Buscar Documentos |titulo| o |autor|"
             changed={this.searchHandler}
           />
-          <PaperTable header={this.state.header} data={filteredPapers} />
+          <PaperTable data={filteredPapers} />
         </FormBox>
         <Footer />
       </div>

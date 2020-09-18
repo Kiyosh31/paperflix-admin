@@ -2,23 +2,26 @@ import React, { useState } from "react";
 import "./PaperTable.css";
 
 import TableButton from "components/TableButton/TableButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import Modal from "components/Modal/Modal";
-import PaperFile from "components/PaperFile/PaperFile";
 import ModifyForm from "components/ModifyForm/ModifyForm";
 import DeleteForm from "components/DeleteForm/DeleteForm";
 
 const PaperTable = (props) => {
   const [modal, setModal] = useState(false);
   const [modalContent, setModalContent] = useState();
+  const [header] = useState([
+    "id",
+    "Titulo",
+    "Descripcion",
+    "Año Publicacion",
+    "Autor",
+    "URL",
+    "Categoria",
+    "Acciones",
+  ]);
 
   function modalHandler(paper, typeModifier) {
     switch (typeModifier) {
-      case "file":
-        setModalContent(<PaperFile id_paper={paper} />);
-        break;
-
       case "edit":
         setModalContent(<ModifyForm paper={paper} />);
         break;
@@ -39,12 +42,12 @@ const PaperTable = (props) => {
   for (let key in props.data) {
     tbodyElements.push({
       id_paper: props.data[key].id_paper,
+      id_category: props.data[key].id_category,
       title: props.data[key].title,
       description: props.data[key].description,
       publication_year: props.data[key].publication_year,
       author: props.data[key].author,
-      language: props.data[key].language,
-      number_pages: props.data[key].number_pages,
+      url: props.data[key].url,
     });
   }
 
@@ -55,12 +58,8 @@ const PaperTable = (props) => {
       <td className="table__description">{paper.description}</td>
       <td>{paper.publication_year}</td>
       <td>{paper.author}</td>
-      <td>{paper.language}</td>
-      <td>
-        <TableButton clicked={() => modalHandler(paper.id_paper, "file")}>
-          <FontAwesomeIcon icon={faFilePdf} />
-        </TableButton>
-      </td>
+      <td className="table__description">{paper.url}</td>
+      <td>{paper.id_category}</td>
       <td>
         <TableButton edit clicked={() => modalHandler(paper, "edit")}>
           Editar
@@ -85,7 +84,7 @@ const PaperTable = (props) => {
       <table className="table">
         <thead>
           <tr>
-            {props.header.map((head, index) => (
+            {header.map((head, index) => (
               <th key={index}>{head}</th>
             ))}
           </tr>

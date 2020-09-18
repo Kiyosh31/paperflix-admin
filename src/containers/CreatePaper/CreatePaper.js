@@ -7,8 +7,6 @@ import Title from "components/Title/Title";
 import FormBox from "components/FormBox/FormBox";
 import Toolbar from "components/Toolbar/Toolbar";
 import Footer from "components/Footer/Footer";
-
-import isBase64 from "is-base64";
 import Modal from "components/Modal/Modal";
 import CreatedContent from "components/CreatedContent/CreatedContent";
 
@@ -47,7 +45,7 @@ const initialState = {
       elementType: "input",
       elementConfig: {
         type: "number",
-        placeholder: "Año de publicacion",
+        placeholder: "Año de publicacion yyyy-mm-dd",
       },
       value: "",
       validation: {
@@ -71,43 +69,16 @@ const initialState = {
       valid: false,
       touched: false,
     },
-    language: {
+    url: {
       elementType: "input",
       elementConfig: {
         type: "text",
-        placeholder: "Idioma",
+        placeholder: "URL",
       },
       value: "",
       validation: {
         required: true,
         minLength: 5,
-      },
-      valid: false,
-      touched: false,
-    },
-    number_pages: {
-      elementType: "input",
-      elementConfig: {
-        type: "number",
-        placeholder: "Numero de paginas",
-      },
-      value: "",
-      validation: {
-        required: true,
-        minLength: 3,
-      },
-      valid: false,
-      touched: false,
-    },
-    file: {
-      elementType: "file",
-      elementConfig: {
-        type: "file",
-        placeholder: "",
-      },
-      value: "",
-      validation: {
-        isFile: true,
       },
       valid: false,
       touched: false,
@@ -161,8 +132,8 @@ class CreatePaper extends Component {
       publication_year: {
         elementType: "input",
         elementConfig: {
-          type: "number",
-          placeholder: "Año de publicacion",
+          type: "text",
+          placeholder: "Año de publicacion yyyy-mm-dd",
         },
         value: "",
         validation: {
@@ -186,43 +157,16 @@ class CreatePaper extends Component {
         valid: false,
         touched: false,
       },
-      language: {
+      url: {
         elementType: "input",
         elementConfig: {
           type: "text",
-          placeholder: "Idioma",
+          placeholder: "URL",
         },
         value: "",
         validation: {
           required: true,
           minLength: 5,
-        },
-        valid: false,
-        touched: false,
-      },
-      number_pages: {
-        elementType: "input",
-        elementConfig: {
-          type: "number",
-          placeholder: "Numero de paginas",
-        },
-        value: "",
-        validation: {
-          required: true,
-          minLength: 3,
-        },
-        valid: false,
-        touched: false,
-      },
-      file: {
-        elementType: "file",
-        elementConfig: {
-          type: "file",
-          placeholder: "",
-        },
-        value: "",
-        validation: {
-          isFile: true,
         },
         valid: false,
         touched: false,
@@ -246,7 +190,7 @@ class CreatePaper extends Component {
 
     for (let key in categoryList) {
       categoryUpdated.elementConfig.options.push({
-        value: categoryList[key].category,
+        value: categoryList[key].id_category,
         displayValue: categoryList[key].category,
       });
     }
@@ -320,43 +264,6 @@ class CreatePaper extends Component {
     this.setState({ controls: updatedControls, formIsValid: formIsValid });
   };
 
-  fileSelectedHandler = async (event, controlName) => {
-    const selectedFile = event.target.files[0];
-    const base64File = await this.convertBase64(selectedFile);
-
-    const updatedControls = {
-      ...this.state.controls,
-      [controlName]: {
-        ...this.state.controls[controlName],
-        value: base64File,
-        valid: this.checkValidity(
-          base64File,
-          this.state.controls[controlName].validation
-        ),
-        touched: true,
-      },
-    };
-
-    console.log(updatedControls);
-
-    let formIsValid = true;
-    for (let inputIdentifier in updatedControls) {
-      formIsValid = updatedControls[inputIdentifier].valid && formIsValid;
-    }
-
-    this.setState({ controls: updatedControls, formIsValid: formIsValid });
-  };
-
-  convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => resolve(fileReader.result);
-      fileReader.onerror = (error) => reject(error);
-    });
-  };
-
   clearForm = () => {
     this.setState(initialState);
     this.componentDidMount();
@@ -370,22 +277,16 @@ class CreatePaper extends Component {
       return;
     }
 
-    if (!isBase64(this.state.controls.file.value, { mimeRequired: true })) {
-      console.log("No es base64");
-      return;
-    }
-
     const formData = {
+      id_category: this.state.controls.category.value,
       title: this.state.controls.title.value,
       description: this.state.controls.description.value,
       publication_year: this.state.controls.publication_year.value,
       author: this.state.controls.author.value,
-      language: this.state.controls.language.value,
-      number_pages: parseInt(this.state.controls.number_pages.value),
-      selectedFile: this.state.controls.file.value,
+      url: this.state.controls.url.value,
     };
 
-    // console.log("formdata", formData);
+    // console.log("form data", formData);
 
     instance
       .post("paper-create/", formData)

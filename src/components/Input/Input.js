@@ -1,9 +1,6 @@
 import React from "react";
 import "./Input.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
-
 const Input = (props) => {
   let inputElement = null;
   let validationError = null;
@@ -50,24 +47,6 @@ const Input = (props) => {
               </option>
             ))}
           </select>
-        </div>
-      );
-      break;
-    case "file":
-      inputElement = (
-        <div>
-          <input
-            id="file-input"
-            accept="application/pdf"
-            className={`input__file ${invalid}`}
-            {...props.elementConfig}
-            value={props.value}
-            onChange={props.changed}
-          />
-          <label className="inputfile__label" htmlFor="file-input">
-            <FontAwesomeIcon icon={faFilePdf} className="brand__icon" />{" "}
-            Selecciona un archivo
-          </label>
         </div>
       );
       break;

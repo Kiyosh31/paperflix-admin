@@ -15,7 +15,7 @@ class ModifyForm extends Component {
           type: "text",
           placeholder: "Titulo",
         },
-        value: this.props.paper.description,
+        value: this.props.paper.title,
         validation: {
           required: true,
           minLength: 5,
@@ -41,7 +41,7 @@ class ModifyForm extends Component {
       publication_year: {
         elementType: "input",
         elementConfig: {
-          type: "number",
+          type: "input",
           placeholder: "Año de publicacion",
         },
         value: this.props.paper.publication_year,
@@ -66,13 +66,13 @@ class ModifyForm extends Component {
         valid: true,
         touched: true,
       },
-      language: {
+      url: {
         elementType: "input",
         elementConfig: {
           type: "text",
-          placeholder: "Idioma",
+          placeholder: "URL",
         },
-        value: this.props.paper.language,
+        value: this.props.paper.url,
         validation: {
           required: true,
           minLength: 5,
@@ -80,42 +80,14 @@ class ModifyForm extends Component {
         valid: true,
         touched: true,
       },
-      number_pages: {
-        elementType: "input",
-        elementConfig: {
-          type: "number",
-          placeholder: "Numero de paginas",
-        },
-        value: this.props.paper.number_pages,
-        validation: {
-          required: true,
-          minLength: 3,
-        },
-        valid: true,
-        touched: true,
-      },
-      file: {
-        elementType: "file",
-        elementConfig: {
-          type: "file",
-          placeholder: "",
-        },
-        value: "",
-        validation: {
-          isFile: true,
-        },
-        valid: false,
-        touched: false,
-      },
       category: {
         elementType: "select",
         elementConfig: {
-          options: [
-            // { value: "uno", displayValue: "Rapido" },
-          ],
+          // options: [{ value: "", displayValue: "Ciencia" }],
+          options: [],
         },
         value: "",
-        valid: true,
+        valid: false,
       },
     },
     formIsValid: false,
@@ -131,11 +103,14 @@ class ModifyForm extends Component {
 
           for (let key in categoryList) {
             categoryUpdated.elementConfig.options.push({
-              value: categoryList[key].category,
+              value: categoryList[key].id_category,
               displayValue: categoryList[key].category,
             });
           }
+          categoryUpdated.value = this.props.paper.id_category;
           this.setState({ category: categoryUpdated });
+
+          console.log("category", this.state.category);
         }
       })
       .catch((err) => console.log(err));
@@ -201,43 +176,6 @@ class ModifyForm extends Component {
     this.setState({ controls: updatedControls, formIsValid: formIsValid });
   };
 
-  fileSelectedHandler = async (event, controlName) => {
-    const selectedFile = event.target.files[0];
-    const base64File = await this.convertBase64(selectedFile);
-
-    const updatedControls = {
-      ...this.state.controls,
-      [controlName]: {
-        ...this.state.controls[controlName],
-        value: base64File,
-        valid: this.checkValidity(
-          base64File,
-          this.state.controls[controlName].validation
-        ),
-        touched: true,
-      },
-    };
-
-    // console.log(updatedControls);
-
-    let formIsValid = true;
-    for (let inputIdentifier in updatedControls) {
-      formIsValid = updatedControls[inputIdentifier].valid && formIsValid;
-    }
-
-    this.setState({ controls: updatedControls, formIsValid: formIsValid });
-  };
-
-  convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => resolve(fileReader.result);
-      fileReader.onerror = (error) => reject(error);
-    });
-  };
-
   submitHandler = (event) => {
     event.preventDefault();
 
@@ -247,13 +185,12 @@ class ModifyForm extends Component {
     }
 
     const formData = {
+      id_category: this.state.controls.category.value,
       title: this.state.controls.title.value,
       description: this.state.controls.description.value,
       publication_year: this.state.controls.publication_year.value,
       author: this.state.controls.author.value,
-      language: this.state.controls.language.value,
-      number_pages: parseInt(this.state.controls.number_pages.value),
-      selectedFile: this.state.controls.file.value,
+      url: this.state.controls.url.value,
     };
 
     instance
@@ -281,19 +218,11 @@ class ModifyForm extends Component {
         key={formElement.id}
         elementType={formElement.config.elementType}
         elementConfig={formElement.config.elementConfig}
-        value={
-          formElement.config.elementType === "file"
-            ? ""
-            : formElement.config.value
-        }
+        value={formElement.config.value}
         invalid={!formElement.config.valid}
         shouldValidate={formElement.config.validation}
         touched={formElement.config.touched}
-        changed={
-          formElement.config.elementType === "file"
-            ? (event) => this.fileSelectedHandler(event, formElement.id)
-            : (event) => this.inputChangedHandler(event, formElement.id)
-        }
+        changed={(event) => this.inputChangedHandler(event, formElement.id)}
       />
     ));
 

@@ -6,7 +6,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const SearchBar = (props) => {
   return (
-    <div className="searchbar__container">
+    <div className="searchicon__container">
       <FontAwesomeIcon
         className={props.white ? "icon__white" : "icon"}
         icon={faSearch}

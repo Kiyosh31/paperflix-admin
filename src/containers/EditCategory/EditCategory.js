@@ -16,7 +16,6 @@ class EditCategory extends Component {
     categories: null,
     loading: true,
     showModal: true,
-    header: ["id", "Categoria", "Accion"],
     search: null,
   };
 
@@ -83,13 +82,13 @@ class EditCategory extends Component {
         {modal}
         <Toolbar />
         <SearchBar />
-        <FormBox fill>
+        <FormBox>
           <Title>Editar Categoria</Title>
           <SearchInput
             placeholder="Buscar categoria"
             changed={this.searchHandler}
           />
-          <CategoryTable header={this.state.header} data={filteredCategories} />
+          <CategoryTable data={filteredCategories} />
         </FormBox>
         <Footer />
       </div>

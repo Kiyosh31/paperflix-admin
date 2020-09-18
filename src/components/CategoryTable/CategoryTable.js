@@ -7,6 +7,7 @@ import "./CategoryTable.css";
 const CategoryTable = (props) => {
   const [modal, setModal] = useState(false);
   const [modalContent, setModalContent] = useState();
+  const [header] = useState(["id", "Categoria", "Accion"]);
 
   function modalHandler(category) {
     setModalContent(<ModifyCategoryForm category={category} />);
@@ -44,7 +45,7 @@ const CategoryTable = (props) => {
       <table className="category__table">
         <thead>
           <tr>
-            {props.header.map((head, index) => (
+            {header.map((head, index) => (
               <th key={index}>{head}</th>
             ))}
           </tr>
