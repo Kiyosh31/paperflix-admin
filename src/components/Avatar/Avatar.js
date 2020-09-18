@@ -8,12 +8,12 @@ const Avatar = () => {
   const [hover, setHover] = useState(false);
 
   return (
-    <div className="avatar__container">
-      <img
-        src={avatar}
-        alt="Paperflix-avatar"
-        onMouseOver={() => setHover(!hover)}
-      />
+    <div
+      className="avatar__container"
+      onMouseEnter={() => setHover(!hover)}
+      onMouseLeave={() => setHover(!hover)}
+    >
+      <img src={avatar} alt="Paperflix-avatar" />
       {hover && <Dropdown />}
     </div>
   );
