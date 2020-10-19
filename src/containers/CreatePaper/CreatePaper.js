@@ -296,17 +296,6 @@ class CreatePaper extends Component {
     } catch (err) {
       console.log(err);
     }
-
-    // instance
-    //   .post("paper-create/", formData)
-    //   .then((response) => {
-    //     console.log(response);
-    //     if (response.status === 201) {
-    //       this.clearForm();
-    //       this.modalHandler();
-    //     }
-    //   })
-    //   .catch((err) => console.log(err));
   };
 
   modalHandler = () => {

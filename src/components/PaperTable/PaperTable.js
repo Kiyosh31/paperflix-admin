@@ -55,10 +55,10 @@ const PaperTable = (props) => {
     <tr key={paper.id_paper}>
       <td>{paper.id_paper}</td>
       <td>{paper.title}</td>
-      <td className="table__description">{paper.description}</td>
+      <td>{paper.description}</td>
       <td>{paper.publication_year}</td>
       <td>{paper.author}</td>
-      <td className="table__description">{paper.url}</td>
+      <td>{paper.url}</td>
       <td>{paper.id_category}</td>
       <td>
         <TableButton edit clicked={() => modalHandler(paper, "edit")}>

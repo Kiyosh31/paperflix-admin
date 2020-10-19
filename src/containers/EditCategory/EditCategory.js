@@ -5,11 +5,11 @@ import FormBox from "components/FormBox/FormBox";
 import Title from "components/Title/Title";
 import Modal from "components/Modal/Modal";
 import Spinner from "components/Spinner/Spinner";
-
-import instance from "axios-instance";
 import CategoryTable from "components/CategoryTable/CategoryTable";
 import SearchBar from "components/SearchIcon/SearchIcon";
 import SearchInput from "components/SearchInput/SearchInput";
+
+import APICalls from "APICalls/APICalls";
 
 class EditCategory extends Component {
   state = {
@@ -19,21 +19,20 @@ class EditCategory extends Component {
     search: null,
   };
 
-  componentDidMount() {
-    instance
-      .get("category-list/")
-      .then((response) => {
+  async componentDidMount() {
+    try {
+      const fetchedCategories = await APICalls.getAllCategories();
+      if (fetchedCategories) {
         this.setState({
-          categories: response.data,
+          categories: fetchedCategories,
           showModal: false,
           loading: false,
         });
-        // console.log(this.state.categories);
-      })
-      .catch((err) => {
-        this.setState({ showModal: false, loading: false });
-        console.log(err);
-      });
+      }
+    } catch (err) {
+      this.setState({ showModal: false, loading: false });
+      console.log(err);
+    }
   }
 
   modalHandler = () => {

@@ -6,9 +6,10 @@ import FormBox from "components/FormBox/FormBox";
 import Title from "components/Title/Title";
 import Input from "components/Input/Input";
 import Button from "components/Button/Button";
-import instance from "axios-instance";
 import Modal from "components/Modal/Modal";
 import CreatedContent from "components/CreatedContent/CreatedContent";
+
+import APICalls from "APICalls/APICalls";
 
 const initialState = {
   controls: {
@@ -111,7 +112,7 @@ class CreateCategory extends Component {
     this.setState(initialState);
   };
 
-  submitHandler = (event) => {
+  submitHandler = async (event) => {
     event.preventDefault();
 
     if (!this.state.formIsValid) {
@@ -119,20 +120,19 @@ class CreateCategory extends Component {
       return;
     }
 
-    const formData = {
+    const payload = {
       category: this.state.controls.category.value,
     };
 
-    instance
-      .post("category-create/", formData)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 201) {
-          this.clearForm();
-          this.modalHandler();
-        }
-      })
-      .catch((err) => console.log(err));
+    try {
+      const fetchedNewCategory = await APICalls.createNewCategory(payload);
+      if (fetchedNewCategory) {
+        this.clearForm();
+        this.modalHandler();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   modalHandler = () => {

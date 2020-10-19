@@ -5,11 +5,12 @@ import Toolbar from "components/Toolbar/Toolbar";
 import Footer from "components/Footer/Footer";
 import FormBox from "components/FormBox/FormBox";
 import Title from "components/Title/Title";
-import instance from "axios-instance";
 import PaperTable from "components/PaperTable/PaperTable";
 import Modal from "components/Modal/Modal";
 import Spinner from "components/Spinner/Spinner";
 import SearchInput from "components/SearchInput/SearchInput";
+
+import APICalls from "APICalls/APICalls";
 
 class EditPaper extends Component {
   state = {
@@ -19,21 +20,19 @@ class EditPaper extends Component {
     search: null,
   };
 
-  componentDidMount() {
-    instance
-      .get("paper-list/")
-      .then((response) => {
+  async componentDidMount() {
+    try {
+      const fetchedPapers = await APICalls.getAllPapers();
+      if (fetchedPapers) {
         this.setState({
-          papers: response.data,
+          papers: fetchedPapers,
           showModal: false,
           loading: false,
         });
-        // console.log(this.state.papers);
-      })
-      .catch((err) => {
-        this.setState({ showModal: false, loading: false });
-        console.log(err);
-      });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   modalHandler = () => {

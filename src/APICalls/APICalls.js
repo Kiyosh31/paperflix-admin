@@ -22,6 +22,64 @@ class APICalls {
     }
   };
 
+  updateCategory = (id_category, payload) => {
+    if (!this.checkCookie()) {
+      window.location.reload();
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      instance
+        .patch(`category-update/${id_category}/`, payload, {
+          headers: this.headers,
+        })
+        .then((response) => {
+          if (response.status === 201) {
+            resolve(response.data);
+          }
+        })
+        .catch((err) => reject(err));
+    });
+  };
+
+  createNewCategory = (payload) => {
+    if (!this.checkCookie()) {
+      window.location.reload();
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      instance
+        .post("category-create/", payload, {
+          headers: this.headers,
+        })
+        .then((response) => {
+          if (response.status === 201) {
+            resolve(response.data);
+          }
+        })
+        .catch((err) => reject(err));
+    });
+  };
+
+  getAllPapers = () => {
+    if (!this.checkCookie()) {
+      window.location.reload();
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      instance
+        .get("paper-list/", { headers: this.headers })
+        .then((response) => {
+          if (response.status === 200) {
+            resolve(response.data);
+          }
+        })
+        .catch((err) => reject(err));
+    });
+  };
+
   getAllCategories = () => {
     if (!this.checkCookie()) {
       window.location.reload();

@@ -5,6 +5,11 @@
   margin: 0 auto;
   margin-left: auto;
   margin-right: auto;
+  overflow-x: auto;
+}
+
+.table tr {
+  border-bottom: 2px solid #ffffff;
 }
 
 .table th {
@@ -12,16 +17,11 @@
   font-weight: bold;
 }
 
-.table tr {
-  height: 10%;
+.table td {
+  max-width: 10%;
 }
 
 .table td {
   text-align: center;
   vertical-align: middle;
-  border-bottom: 2px solid #ffffff;
-}
-
-.table__description {
-  width: 20%;
 }

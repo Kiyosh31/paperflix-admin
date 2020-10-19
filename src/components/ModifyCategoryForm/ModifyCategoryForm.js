@@ -3,7 +3,8 @@ import React, { Component } from "react";
 import Title from "components/Title/Title";
 import Button from "components/Button/Button";
 import Input from "components/Input/Input";
-import instance from "axios-instance";
+
+import APICalls from "APICalls/APICalls";
 
 class ModifyCategoryForm extends Component {
   state = {
@@ -82,7 +83,7 @@ class ModifyCategoryForm extends Component {
     this.setState({ controls: updatedControls, formIsValid: formIsValid });
   };
 
-  submitHandler = (event) => {
+  submitHandler = async (event) => {
     event.preventDefault();
 
     if (!this.state.formIsValid) {
@@ -90,19 +91,22 @@ class ModifyCategoryForm extends Component {
       return;
     }
 
-    const formData = {
+    const payload = {
       category: this.state.controls.category.value,
     };
 
-    instance
-      .patch(`category-update/${this.props.category.id_category}/`, formData)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 201) {
-          window.location.reload();
-        }
-      })
-      .catch((err) => console.log(err));
+    try {
+      const fetchedCategoryUpdated = await APICalls.updateCategory(
+        this.props.category.id_category,
+        payload
+      );
+
+      if (fetchedCategoryUpdated) {
+        window.location.reload();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   render() {
