@@ -2,13 +2,14 @@ import React, { Component } from "react";
 
 import Input from "components/Input/Input";
 import Button from "components/Button/Button";
-import instance from "axios-instance";
 import Title from "components/Title/Title";
 import FormBox from "components/FormBox/FormBox";
 import Toolbar from "components/Toolbar/Toolbar";
 import Footer from "components/Footer/Footer";
 import Modal from "components/Modal/Modal";
 import CreatedContent from "components/CreatedContent/CreatedContent";
+
+import APICalls from "APICalls/APICalls";
 
 const initialState = {
   controls: {
@@ -197,15 +198,15 @@ class CreatePaper extends Component {
     this.setState({ category: categoryUpdated });
   };
 
-  componentDidMount() {
-    instance
-      .get("category-list/")
-      .then((response) => {
-        if (response.status === 200) {
-          this.categoryListhandler(response.data);
-        }
-      })
-      .catch((err) => console.log(err));
+  async componentDidMount() {
+    try {
+      const fetchedCategories = await APICalls.getAllCategories();
+      if (fetchedCategories) {
+        this.categoryListhandler(fetchedCategories);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   checkValidity(value, rules) {
@@ -269,7 +270,7 @@ class CreatePaper extends Component {
     this.componentDidMount();
   };
 
-  submitHandler = (event) => {
+  submitHandler = async (event) => {
     event.preventDefault();
 
     if (!this.state.formIsValid) {
@@ -277,7 +278,7 @@ class CreatePaper extends Component {
       return;
     }
 
-    const formData = {
+    const payload = {
       id_category: this.state.controls.category.value,
       title: this.state.controls.title.value,
       description: this.state.controls.description.value,
@@ -286,18 +287,26 @@ class CreatePaper extends Component {
       url: this.state.controls.url.value,
     };
 
-    // console.log("form data", formData);
+    try {
+      const fetchedNewPaper = await APICalls.createNewPaper(payload);
+      if (fetchedNewPaper) {
+        this.clearForm();
+        this.modalHandler();
+      }
+    } catch (err) {
+      console.log(err);
+    }
 
-    instance
-      .post("paper-create/", formData)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 201) {
-          this.clearForm();
-          this.modalHandler();
-        }
-      })
-      .catch((err) => console.log(err));
+    // instance
+    //   .post("paper-create/", formData)
+    //   .then((response) => {
+    //     console.log(response);
+    //     if (response.status === 201) {
+    //       this.clearForm();
+    //       this.modalHandler();
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   modalHandler = () => {

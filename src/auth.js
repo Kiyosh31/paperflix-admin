@@ -1,9 +1,8 @@
 import instance from "axios-instance";
 import Cookies from "js-cookie";
-import { sha256 } from "js-sha256";
 
 class Auth {
-  login(email, password) {
+  async login(email, password) {
     return new Promise((resolve, reject) => {
       const payload = {
         email: email,
@@ -13,11 +12,17 @@ class Auth {
       instance
         .post("admin-login/", payload)
         .then((response) => {
-          if (response.status === 200) {
-            let hash = sha256.create();
-            hash.update(email + password);
-            hash.hex();
-            resolve(Cookies.set("admin", hash, { expires: 1 }));
+          if (response.status === 201 || response.status === 200) {
+            Cookies.set(
+              "authenticated",
+              response.data.id_user + "|" + response.data.cookie,
+              {
+                expires: 1,
+              }
+            );
+            resolve(true);
+          } else if (response.status === 400) {
+            reject(response);
           }
         })
         .catch((err) => {
@@ -26,23 +31,35 @@ class Auth {
     });
   }
 
-  logout() {
-    return new Promise((resolve, reject) => {
-      Cookies.remove("admin");
-      if (!this.isAuthenticated()) {
-        resolve(true);
-      }
+  async logout() {
+    const id_user = Cookies.get("authenticated").split("|")[0];
+    const cookieValue = Cookies.get("authenticated").split("|")[1];
 
-      reject(false);
-    });
+    instance
+      .get(`admin-logout/${id_user}/`, {
+        headers: {
+          authorization: cookieValue,
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          Cookies.remove("authenticated");
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   isAuthenticated() {
-    if (Cookies.get("admin")) {
+    if (Cookies.get("authenticated")) {
       return true;
     }
-
     return false;
+  }
+
+  deleteCookie() {
+    if (Cookies.get("authenticated")) {
+      Cookies.remove("authenticated");
+    }
   }
 }
 

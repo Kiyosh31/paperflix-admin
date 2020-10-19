@@ -16,11 +16,9 @@ const Dropdown = () => {
 
   async function logoutHandler() {
     try {
-      const result = await auth.logout();
-      if (result) {
-        console.log("logout exitoso");
-        history.push("/");
-      }
+      await auth.logout();
+      auth.deleteCookie();
+      history.push("/");
     } catch (err) {
       console.log(err);
     }
