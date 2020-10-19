@@ -22,6 +22,44 @@ class APICalls {
     }
   };
 
+  deletePaper = (id_paper) => {
+    if (!this.checkCookie()) {
+      window.location.reload();
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      instance
+        .delete(`paper-delete/${id_paper}`, { headers: this.headers })
+        .then((response) => {
+          if (response.status === 200) {
+            resolve(response.data);
+          }
+        })
+        .catch((err) => reject(err));
+    });
+  };
+
+  updatePaper = (id_paper, payload) => {
+    if (!this.checkCookie()) {
+      window.location.reload();
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      instance
+        .put(`paper-update/${id_paper}/`, payload, {
+          headers: this.headers,
+        })
+        .then((response) => {
+          if (response.status === 201) {
+            resolve(response.data);
+          }
+        })
+        .catch((err) => reject(err));
+    });
+  };
+
   updateCategory = (id_category, payload) => {
     if (!this.checkCookie()) {
       window.location.reload();

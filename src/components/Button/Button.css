@@ -29,3 +29,62 @@
   color: #666666;
   cursor: not-allowed;
 }
+
+.button__edit {
+  height: 50px;
+  width: 100%;
+  background: #6c757d;
+  border: 1px solid #6c757d;
+  border-radius: 3px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.button__edit:hover {
+  color: #000;
+  background-color: #6c757d;
+  transition: all 0.2s;
+}
+
+.button__delete {
+  height: 50px;
+  width: 50%;
+  background: #e50914;
+  border: 1px solid #e50914;
+  border-radius: 3px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.button__delete:hover {
+  color: #000;
+  background-color: #be161e;
+  transition: all 0.2s;
+}
+
+.table__button {
+  height: 40px;
+  width: 30%;
+  background: #24a0ed;
+  border: 1px solid #24a0ed;
+  border-radius: 3px;
+  color: #fff;
+}
+
+.table__button:hover {
+  color: #000;
+  background-color: #1b90da;
+  transition: all 0.2s;
+}
+
+.table__button:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}

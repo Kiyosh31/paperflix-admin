@@ -1,33 +1,34 @@
-import Title from "components/Title/Title";
+import React from "react";
 import "./DeleteForm.css";
 
-import React from "react";
-import TableButton from "components/TableButton/TableButton";
-import instance from "axios-instance";
+import Title from "components/Title/Title";
+import Button from "components/Button/Button";
+import APICalls from "APICalls/APICalls";
 
 const DeleteForm = (props) => {
-  function onSubmit(event) {
+  async function submitHandler(event) {
     event.preventDefault();
 
-    instance
-      .delete(`paper-delete/${props.id_paper}`)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          console.log("Eliminado correctamente");
-          window.location.reload();
-        }
-      })
-      .catch((err) => console.log(err));
+    try {
+      const fetchedDeletedPaper = await APICalls.deletePaper(props.id_paper);
+      if (fetchedDeletedPaper) {
+        window.location.reload();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
     <div>
       <Title>Eliminar Documento</Title>
       <p>Esta seguro que desea eliminar este documento?</p>
-      <form onSubmit={onSubmit}>
-        <TableButton delete>Eliminar</TableButton>
-      </form>
+      <Button delete noContainer clicked={submitHandler}>
+        Eliminar
+      </Button>
+      <Button edit noContainer clicked={props.clicked}>
+        Cancelar
+      </Button>
     </div>
   );
 };

@@ -6,7 +6,6 @@ import Title from "components/Title/Title";
 import Modal from "components/Modal/Modal";
 import Spinner from "components/Spinner/Spinner";
 import CategoryTable from "components/CategoryTable/CategoryTable";
-import SearchBar from "components/SearchIcon/SearchIcon";
 import SearchInput from "components/SearchInput/SearchInput";
 
 import APICalls from "APICalls/APICalls";
@@ -80,7 +79,6 @@ class EditCategory extends Component {
       <div>
         {modal}
         <Toolbar />
-        <SearchBar />
         <FormBox>
           <Title>Editar Categoria</Title>
           <SearchInput

@@ -8,20 +8,24 @@
   overflow-x: auto;
 }
 
-.table tr {
-  border-bottom: 2px solid #ffffff;
-}
-
 .table th {
   color: #cccccc;
   font-weight: bold;
 }
 
-.table td {
-  max-width: 10%;
-}
-
-.table td {
+.table__content {
+  width: 50px;
+  max-width: 120px;
   text-align: center;
   vertical-align: middle;
+  border-bottom: 2px solid #ffffff;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #bcbcbc;
 }

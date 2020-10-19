@@ -1,8 +1,9 @@
-import Modal from "components/Modal/Modal";
-import ModifyCategoryForm from "components/ModifyCategoryForm/ModifyCategoryForm";
-import TableButton from "components/TableButton/TableButton";
 import React, { useState } from "react";
 import "./CategoryTable.css";
+
+import ModifyCategoryForm from "components/ModifyCategoryForm/ModifyCategoryForm";
+import Modal from "components/Modal/Modal";
+import Button from "components/Button/Button";
 
 const CategoryTable = (props) => {
   const [modal, setModal] = useState(false);
@@ -28,9 +29,9 @@ const CategoryTable = (props) => {
       <td>{category.id_category}</td>
       <td>{category.category}</td>
       <td>
-        <TableButton edit clicked={() => modalHandler(category)}>
+        <Button edit clicked={() => modalHandler(category)}>
           Editar
-        </TableButton>
+        </Button>
       </td>
     </tr>
   ));

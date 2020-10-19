@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import "./ModifyForm.css";
+import "./ModifyPaperForm.css";
 
 import Title from "components/Title/Title";
 import Button from "components/Button/Button";
 import Input from "components/Input/Input";
-import instance from "axios-instance";
 
-class ModifyForm extends Component {
+import APICalls from "APICalls/APICalls";
+
+class ModifyPaperForm extends Component {
   state = {
     controls: {
       title: {
@@ -93,31 +94,25 @@ class ModifyForm extends Component {
     formIsValid: false,
   };
 
-  getCategoryList = () => {
-    instance
-      .get("category-list/")
-      .then((response) => {
-        if (response.status === 200) {
-          let categoryUpdated = { ...this.state.controls.category };
-          let categoryList = response.data;
+  async componentDidMount() {
+    try {
+      const fetchedCategories = await APICalls.getAllCategories();
+      if (fetchedCategories) {
+        let categoryUpdated = { ...this.state.controls.category };
+        let categoryList = fetchedCategories;
 
-          for (let key in categoryList) {
-            categoryUpdated.elementConfig.options.push({
-              value: categoryList[key].id_category,
-              displayValue: categoryList[key].category,
-            });
-          }
-          categoryUpdated.value = this.props.paper.id_category;
-          this.setState({ category: categoryUpdated });
-
-          console.log("category", this.state.category);
+        for (let key in categoryList) {
+          categoryUpdated.elementConfig.options.push({
+            value: categoryList[key].id_category,
+            displayValue: categoryList[key].category,
+          });
         }
-      })
-      .catch((err) => console.log(err));
-  };
-
-  componentDidMount() {
-    this.getCategoryList();
+        categoryUpdated.value = this.props.paper.id_category;
+        this.setState({ category: categoryUpdated });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   checkValidity(value, rules) {
@@ -176,7 +171,7 @@ class ModifyForm extends Component {
     this.setState({ controls: updatedControls, formIsValid: formIsValid });
   };
 
-  submitHandler = (event) => {
+  submitHandler = async (event) => {
     event.preventDefault();
 
     if (!this.state.formIsValid) {
@@ -184,7 +179,7 @@ class ModifyForm extends Component {
       return;
     }
 
-    const formData = {
+    const payload = {
       id_category: this.state.controls.category.value,
       title: this.state.controls.title.value,
       description: this.state.controls.description.value,
@@ -193,15 +188,17 @@ class ModifyForm extends Component {
       url: this.state.controls.url.value,
     };
 
-    instance
-      .put(`paper-update/${this.props.paper.id_paper}/`, formData)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 201) {
-          window.location.reload();
-        }
-      })
-      .catch((err) => console.log(err));
+    try {
+      const fetchedUpdatedpaper = await APICalls.updatePaper(
+        this.props.paper.id_paper,
+        payload
+      );
+      if (fetchedUpdatedpaper) {
+        window.location.reload();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   render() {
@@ -240,4 +237,4 @@ class ModifyForm extends Component {
   }
 }
 
-export default ModifyForm;
+export default ModifyPaperForm;

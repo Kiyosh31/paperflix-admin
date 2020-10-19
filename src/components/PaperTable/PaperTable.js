@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./PaperTable.css";
 
-import TableButton from "components/TableButton/TableButton";
 import Modal from "components/Modal/Modal";
-import ModifyForm from "components/ModifyForm/ModifyForm";
+import ModifyPaperForm from "components/ModifyPaperForm/ModifyPaperForm";
 import DeleteForm from "components/DeleteForm/DeleteForm";
+import Button from "components/Button/Button";
 
 const PaperTable = (props) => {
   const [modal, setModal] = useState(false);
@@ -13,21 +13,19 @@ const PaperTable = (props) => {
     "id",
     "Titulo",
     "Descripcion",
-    "Año Publicacion",
     "Autor",
     "URL",
-    "Categoria",
     "Acciones",
   ]);
 
   function modalHandler(paper, typeModifier) {
     switch (typeModifier) {
       case "edit":
-        setModalContent(<ModifyForm paper={paper} />);
+        setModalContent(<ModifyPaperForm paper={paper} />);
         break;
 
       case "delete":
-        setModalContent(<DeleteForm id_paper={paper} />);
+        setModalContent(<DeleteForm clicked={closeModal} id_paper={paper} />);
         break;
 
       default:
@@ -36,6 +34,10 @@ const PaperTable = (props) => {
     }
 
     setModal(!modal);
+  }
+
+  function closeModal() {
+    setModal(false);
   }
 
   const tbodyElements = [];
@@ -53,23 +55,31 @@ const PaperTable = (props) => {
 
   const body = tbodyElements.map((paper) => (
     <tr key={paper.id_paper}>
-      <td>{paper.id_paper}</td>
-      <td>{paper.title}</td>
-      <td>{paper.description}</td>
-      <td>{paper.publication_year}</td>
-      <td>{paper.author}</td>
-      <td>{paper.url}</td>
-      <td>{paper.id_category}</td>
-      <td>
-        <TableButton edit clicked={() => modalHandler(paper, "edit")}>
+      <td className="table__content">{paper.id_paper}</td>
+      <td className="table__content">{paper.title}</td>
+      <td className="table__content">{paper.description}</td>
+      <td className="table__content">{paper.author}</td>
+      <td className="table__content">
+        <a
+          href={paper.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="link"
+        >
+          {paper.url}
+        </a>
+      </td>
+      <td className="table__content">
+        <Button edit noContainer clicked={() => modalHandler(paper, "edit")}>
           Editar
-        </TableButton>
-        <TableButton
+        </Button>
+        <Button
           delete
+          noContainer
           clicked={() => modalHandler(paper.id_paper, "delete")}
         >
           Eliminar
-        </TableButton>
+        </Button>
       </td>
     </tr>
   ));
