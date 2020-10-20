@@ -40,7 +40,7 @@ class EditPaper extends Component {
     this.setState({ showModal: !this.state.showModal });
   };
 
-  searchHandler = (event) => {
+  searchBarHandler = (event) => {
     const searchText = event.target.value;
 
     if (this.state.canSearch !== null || this.state.canSearch !== undefined) {
@@ -99,7 +99,7 @@ class EditPaper extends Component {
           <Title>Editar Documento</Title>
           <SearchInput
             placeholder="Buscar Documentos |titulo| o |autor|"
-            changed={this.searchHandler}
+            changed={this.searchBarHandler}
           />
           <PaperTable
             data={

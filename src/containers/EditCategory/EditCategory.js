@@ -15,6 +15,7 @@ class EditCategory extends Component {
     categories: null,
     loading: true,
     showModal: true,
+    filteredCategories: null,
     search: null,
   };
 
@@ -38,8 +39,33 @@ class EditCategory extends Component {
     this.setState({ showModal: !this.state.showModal });
   };
 
-  searchHandler = (event) => {
-    this.setState({ search: event.target.value });
+  searchBarHandler = (event) => {
+    const searchText = event.target.value;
+
+    if (this.state.canSearch !== null || this.state.canSearch !== undefined) {
+      clearTimeout(this.state.canSearch);
+    }
+
+    if (!searchText) {
+      this.setState({ filteredCategories: null });
+    }
+
+    const myRef = setTimeout(async () => {
+      const payload = {
+        search: searchText,
+      };
+
+      try {
+        const fetchedSearch = await APICalls.searchCategories(payload);
+        if (fetchedSearch) {
+          this.setState({ filteredCategories: fetchedSearch });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }, 700);
+
+    this.setState({ canSearch: myRef });
   };
 
   render() {
@@ -64,17 +90,6 @@ class EditCategory extends Component {
       modal = null;
     }
 
-    let filteredCategories = null;
-    if (this.state.search === "" || this.state.search === null) {
-      filteredCategories = this.state.categories;
-    } else {
-      filteredCategories = this.state.categories.filter((category) => {
-        return category.category
-          .toLowerCase()
-          .includes(this.state.search.toLowerCase());
-      });
-    }
-
     return (
       <div>
         {modal}
@@ -83,9 +98,15 @@ class EditCategory extends Component {
           <Title>Editar Categoria</Title>
           <SearchInput
             placeholder="Buscar categoria"
-            changed={this.searchHandler}
+            changed={this.searchBarHandler}
           />
-          <CategoryTable data={filteredCategories} />
+          <CategoryTable
+            data={
+              this.state.filteredCategories
+                ? this.state.filteredCategories
+                : this.state.categories
+            }
+          />
         </FormBox>
         <Footer />
       </div>
