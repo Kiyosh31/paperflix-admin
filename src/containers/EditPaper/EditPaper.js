@@ -17,7 +17,8 @@ class EditPaper extends Component {
     papers: null,
     showModal: true,
     loading: true,
-    search: null,
+    filteredPapers: null,
+    canSearch: null,
   };
 
   async componentDidMount() {
@@ -40,7 +41,32 @@ class EditPaper extends Component {
   };
 
   searchHandler = (event) => {
-    this.setState({ search: event.target.value });
+    const searchText = event.target.value;
+
+    if (this.state.canSearch !== null || this.state.canSearch !== undefined) {
+      clearTimeout(this.state.canSearch);
+    }
+
+    if (!searchText) {
+      this.setState({ filteredPapers: null });
+    }
+
+    const myRef = setTimeout(async () => {
+      const payload = {
+        search: searchText,
+      };
+
+      try {
+        const fetchedSearch = await APICalls.searchPapers(payload);
+        if (fetchedSearch) {
+          this.setState({ filteredPapers: fetchedSearch });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }, 700);
+
+    this.setState({ canSearch: myRef });
   };
 
   render() {
@@ -65,18 +91,6 @@ class EditPaper extends Component {
       modal = null;
     }
 
-    let filteredPapers = null;
-    if (this.state.search === "" || this.state.search === null) {
-      filteredPapers = this.state.papers;
-    } else {
-      filteredPapers = this.state.papers.filter((paper) => {
-        return (
-          paper.title.toLowerCase().includes(this.state.search.toLowerCase()) ||
-          paper.author.toLowerCase().includes(this.state.search.toLowerCase())
-        );
-      });
-    }
-
     return (
       <div>
         {modal}
@@ -87,7 +101,13 @@ class EditPaper extends Component {
             placeholder="Buscar Documentos |titulo| o |autor|"
             changed={this.searchHandler}
           />
-          <PaperTable data={filteredPapers} />
+          <PaperTable
+            data={
+              this.state.filteredPapers
+                ? this.state.filteredPapers
+                : this.state.papers
+            }
+          />
         </FormBox>
         <Footer />
       </div>

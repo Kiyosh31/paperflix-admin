@@ -22,6 +22,27 @@ class APICalls {
     }
   };
 
+  searchPapers = (payload) => {
+    if (!this.checkCookie()) {
+      window.location.reload();
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      instance
+        .post("paper-search/", payload, {
+          headers: this.contentHeaders,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            resolve(response.data);
+          }
+          return;
+        })
+        .catch((err) => reject(err));
+    });
+  };
+
   deletePaper = (id_paper) => {
     if (!this.checkCookie()) {
       window.location.reload();
