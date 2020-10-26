@@ -9,27 +9,39 @@ import PaperTable from "components/PaperTable/PaperTable";
 import Modal from "components/Modal/Modal";
 import Spinner from "components/Spinner/Spinner";
 import SearchInput from "components/SearchInput/SearchInput";
+import Button from "components/Button/Button";
 
 import APICalls from "APICalls/APICalls";
 
 class EditPaper extends Component {
   state = {
     papers: null,
+    categories: null,
     showModal: true,
     loading: true,
     filteredPapers: null,
     canSearch: null,
+    page: 1,
   };
 
   async componentDidMount() {
     try {
-      const fetchedPapers = await APICalls.getAllPapers();
+      const fetchedPapers = await APICalls.getPaginatedPapers(this.state.page);
       if (fetchedPapers) {
         this.setState({
           papers: fetchedPapers,
           showModal: false,
           loading: false,
         });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const fetchedCategories = await APICalls.getAllCategories();
+      if (fetchedCategories) {
+        this.setState({ categories: fetchedCategories });
       }
     } catch (err) {
       console.log(err);
@@ -41,14 +53,15 @@ class EditPaper extends Component {
   };
 
   searchBarHandler = (event) => {
-    const searchText = event.target.value;
+    const searchText = event.target.value.trim();
 
     if (this.state.canSearch !== null || this.state.canSearch !== undefined) {
       clearTimeout(this.state.canSearch);
     }
 
-    if (!searchText) {
+    if (!searchText || searchText === "") {
       this.setState({ filteredPapers: null });
+      return;
     }
 
     const myRef = setTimeout(async () => {
@@ -67,6 +80,32 @@ class EditPaper extends Component {
     }, 700);
 
     this.setState({ canSearch: myRef });
+  };
+
+  loadPageHandler = async () => {
+    let pageNumber = this.state.page;
+    pageNumber = pageNumber + 1;
+
+    this.setState({ showModal: true, loading: true });
+
+    try {
+      const fetchedPapers = await APICalls.getPaginatedPapers(pageNumber);
+      if (fetchedPapers) {
+        let updatedPapers = [...this.state.papers];
+        for (let key in fetchedPapers) {
+          updatedPapers.push(fetchedPapers[key]);
+        }
+
+        this.setState({
+          papers: updatedPapers,
+          page: pageNumber,
+          showModal: false,
+          loading: false,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   render() {
@@ -91,6 +130,8 @@ class EditPaper extends Component {
       modal = null;
     }
 
+    console.log("papers en estado", this.state.papers);
+
     return (
       <div>
         {modal}
@@ -107,8 +148,12 @@ class EditPaper extends Component {
                 ? this.state.filteredPapers
                 : this.state.papers
             }
+            categories={this.state.categories}
           />
         </FormBox>
+        {!this.state.filteredPapers && (
+          <Button clicked={this.loadPageHandler}>Cargar mas</Button>
+        )}
         <Footer />
       </div>
     );

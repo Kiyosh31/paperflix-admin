@@ -6,7 +6,7 @@ import Button from "components/Button/Button";
 import Modal from "components/Modal/Modal";
 import CreatedContent from "components/CreatedContent/CreatedContent";
 
-// import APICalls from "APICalls/APICalls";
+import APICalls from "APICalls/APICalls";
 
 const initialState = {
   controls: {
@@ -184,15 +184,15 @@ class UserSettings extends Component {
       payload.password = this.state.controls.password.value;
     }
 
-    // try {
-    //   const fetchedUpdatedUser = await Requests.updateUser(payload);
-    //   if (fetchedUpdatedUser) {
-    //     this.modalHandler("creado");
-    //     this.clearForm();
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const fetchedUpdatedUser = await APICalls.updateUser(payload);
+      if (fetchedUpdatedUser) {
+        this.modalHandler("creado");
+        this.clearForm();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   clearForm = () => {

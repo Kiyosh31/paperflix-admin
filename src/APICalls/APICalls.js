@@ -22,6 +22,26 @@ class APICalls {
     }
   };
 
+  updateUser = (payload) => {
+    if (!this.checkCookie()) {
+      window.location.reload();
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      instance
+        .patch(`admin-update/${this.id_user}/`, payload, {
+          headers: this.contentHeaders,
+        })
+        .then((response) => {
+          if (response.status === 201) {
+            resolve(response.data);
+          }
+        })
+        .catch((err) => reject(err));
+    });
+  };
+
   searchCategories = (payload) => {
     if (!this.checkCookie()) {
       window.location.reload();
@@ -38,6 +58,26 @@ class APICalls {
             resolve(response.data);
           }
           return;
+        })
+        .catch((err) => reject(err));
+    });
+  };
+
+  getPaginatedPapers = (page) => {
+    if (!this.checkCookie()) {
+      window.location.reload();
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      instance
+        .get(`paper-pagination-admin/${page}/`, {
+          headers: this.headers,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            resolve(response.data);
+          }
         })
         .catch((err) => reject(err));
     });
@@ -135,24 +175,6 @@ class APICalls {
         })
         .then((response) => {
           if (response.status === 201) {
-            resolve(response.data);
-          }
-        })
-        .catch((err) => reject(err));
-    });
-  };
-
-  getAllPapers = () => {
-    if (!this.checkCookie()) {
-      window.location.reload();
-      return;
-    }
-
-    return new Promise((resolve, reject) => {
-      instance
-        .get("paper-list/", { headers: this.headers })
-        .then((response) => {
-          if (response.status === 200) {
             resolve(response.data);
           }
         })

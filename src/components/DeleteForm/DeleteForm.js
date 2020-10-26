@@ -10,7 +10,7 @@ const DeleteForm = (props) => {
     event.preventDefault();
 
     try {
-      const fetchedDeletedPaper = await APICalls.deletePaper(props.id_paper);
+      const fetchedDeletedPaper = await APICalls.deletePaper(props.paper);
       if (fetchedDeletedPaper) {
         window.location.reload();
       }

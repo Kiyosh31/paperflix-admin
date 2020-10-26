@@ -21,11 +21,19 @@ const PaperTable = (props) => {
   function modalHandler(paper, typeModifier) {
     switch (typeModifier) {
       case "edit":
-        setModalContent(<ModifyPaperForm paper={paper} />);
+        setModalContent(
+          <ModifyPaperForm
+            paper={paper}
+            categories={props.categories}
+            selectedCategory={props.categories.filter(
+              (category) => category.id_category === paper.id_category
+            )}
+          />
+        );
         break;
 
       case "delete":
-        setModalContent(<DeleteForm clicked={closeModal} id_paper={paper} />);
+        setModalContent(<DeleteForm clicked={closeModal} paper={paper} />);
         break;
 
       default:

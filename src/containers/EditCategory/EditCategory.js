@@ -40,7 +40,7 @@ class EditCategory extends Component {
   };
 
   searchBarHandler = (event) => {
-    const searchText = event.target.value;
+    const searchText = event.target.value.trim();
 
     if (this.state.canSearch !== null || this.state.canSearch !== undefined) {
       clearTimeout(this.state.canSearch);

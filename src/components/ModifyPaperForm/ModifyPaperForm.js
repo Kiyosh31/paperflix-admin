@@ -84,35 +84,29 @@ class ModifyPaperForm extends Component {
       category: {
         elementType: "select",
         elementConfig: {
-          // options: [{ value: "", displayValue: "Ciencia" }],
+          // options: [{ value: "0", displayValue: "Ciencia", selected: "" }],
           options: [],
         },
-        value: "",
-        valid: false,
+        value: this.props.selectedCategory[0].id_category,
+        valid: true,
       },
     },
     formIsValid: false,
   };
 
-  async componentDidMount() {
-    try {
-      const fetchedCategories = await APICalls.getAllCategories();
-      if (fetchedCategories) {
-        let categoryUpdated = { ...this.state.controls.category };
-        let categoryList = fetchedCategories;
+  componentDidMount() {
+    let categoryUpdated = { ...this.state.controls.category };
+    let categories = { ...this.props.categories };
 
-        for (let key in categoryList) {
-          categoryUpdated.elementConfig.options.push({
-            value: categoryList[key].id_category,
-            displayValue: categoryList[key].category,
-          });
-        }
-        categoryUpdated.value = this.props.paper.id_category;
-        this.setState({ category: categoryUpdated });
-      }
-    } catch (err) {
-      console.log(err);
+    // genero todas las categorias en el selectBox
+    for (let key in categories) {
+      categoryUpdated.elementConfig.options.push({
+        value: categories[key].id_category,
+        displayValue: categories[key].category,
+      });
     }
+
+    this.setState({ category: categoryUpdated });
   }
 
   checkValidity(value, rules) {
