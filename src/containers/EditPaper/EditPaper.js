@@ -130,8 +130,6 @@ class EditPaper extends Component {
       modal = null;
     }
 
-    console.log("papers en estado", this.state.papers);
-
     return (
       <div>
         {modal}
