@@ -120,6 +120,7 @@ class Login extends Component {
       );
       if (loggedIn) {
         this.setState({ isAuthenticated: true });
+        window.location.reload();
       }
     } catch (err) {
       console.log(err);

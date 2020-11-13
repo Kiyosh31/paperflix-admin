@@ -22,6 +22,11 @@ class APICalls {
     }
   };
 
+  deleteCookie = () => {
+    Cookies.remove("authenticated");
+    window.location.reload();
+  };
+
   updateUser = (payload) => {
     if (!this.checkCookie()) {
       window.location.reload();
@@ -38,7 +43,13 @@ class APICalls {
             resolve(response.data);
           }
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.deleteCookie();
+          } else {
+            reject(err);
+          }
+        });
     });
   };
 
@@ -59,7 +70,13 @@ class APICalls {
           }
           return;
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.deleteCookie();
+          } else {
+            reject(err);
+          }
+        });
     });
   };
 
@@ -79,7 +96,13 @@ class APICalls {
             resolve(response.data);
           }
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.deleteCookie();
+          } else {
+            reject(err);
+          }
+        });
     });
   };
 
@@ -100,7 +123,13 @@ class APICalls {
           }
           return;
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.deleteCookie();
+          } else {
+            reject(err);
+          }
+        });
     });
   };
 
@@ -118,7 +147,13 @@ class APICalls {
             resolve(response.data);
           }
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.deleteCookie();
+          } else {
+            reject(err);
+          }
+        });
     });
   };
 
@@ -138,7 +173,13 @@ class APICalls {
             resolve(response.data);
           }
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.deleteCookie();
+          } else {
+            reject(err);
+          }
+        });
     });
   };
 
@@ -158,7 +199,13 @@ class APICalls {
             resolve(response.data);
           }
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.deleteCookie();
+          } else {
+            reject(err);
+          }
+        });
     });
   };
 
@@ -178,7 +225,13 @@ class APICalls {
             resolve(response.data);
           }
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.deleteCookie();
+          } else {
+            reject(err);
+          }
+        });
     });
   };
 
@@ -198,7 +251,13 @@ class APICalls {
             resolve(response.data);
           }
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.deleteCookie();
+          } else {
+            reject(err);
+          }
+        });
     });
   };
 
@@ -218,7 +277,39 @@ class APICalls {
             resolve(response.data);
           }
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.deleteCookie();
+          } else {
+            reject(err);
+          }
+        });
+    });
+  };
+
+  getInfo = () => {
+    if (!this.checkCookie()) {
+      window.location.reload();
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      instance
+        .get("get-info/", {
+          headers: this.contentHeaders,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            resolve(response.data);
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.deleteCookie();
+          } else {
+            reject(err);
+          }
+        });
     });
   };
 }

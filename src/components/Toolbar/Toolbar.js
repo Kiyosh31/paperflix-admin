@@ -14,7 +14,6 @@ const Toolbar = () => {
         <NavigationItems />
       </div>
       <nav>
-        {/* <SearchIcon /> */}
         <Avatar />
       </nav>
     </header>
