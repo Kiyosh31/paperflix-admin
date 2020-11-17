@@ -119,8 +119,10 @@ class Login extends Component {
         this.state.controls.password.value
       );
       if (loggedIn) {
-        this.setState({ isAuthenticated: true });
-        window.location.reload();
+        if (auth.isAuthenticated()) {
+          this.setState({ isAuthenticated: true });
+          window.location.reload();
+        }
       }
     } catch (err) {
       console.log(err);

@@ -1,15 +1,14 @@
 import React from "react";
-import "./LoadingModal.css";
 
 import Spinner from "components/Spinner/Spinner";
+import Modal from "components/Modal/Modal";
 
 const LoadingModal = () => {
   return (
     <div>
-      <div className="backdrop" />
-      <div className="modal">
+      <Modal show transparent>
         <Spinner />
-      </div>
+      </Modal>
     </div>
   );
 };
