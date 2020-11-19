@@ -27,6 +27,12 @@ class APICalls {
     window.location.reload();
   };
 
+  createHeaders = () => {
+    const cookieValue = Cookies.get("authenticated").split("|")[1];
+    const headers = { authorization: cookieValue };
+    return headers;
+  };
+
   updateUser = (payload) => {
     if (!this.checkCookie()) {
       window.location.reload();
@@ -294,9 +300,11 @@ class APICalls {
     }
 
     return new Promise((resolve, reject) => {
+      const headers = this.createHeaders();
+
       instance
         .get("get-info/", {
-          headers: this.contentHeaders,
+          headers: headers,
         })
         .then((response) => {
           if (response.status === 200) {
